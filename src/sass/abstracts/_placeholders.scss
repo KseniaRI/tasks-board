@@ -1,0 +1,51 @@
+%card {
+    display: flex;
+    flex-direction: column;
+    background-color: $card-background-color;
+    border-radius: $radi-box;
+    box-shadow: $box-shadow;
+}
+
+%main-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    padding: 8px;
+    font-size: $secondary-text-font-size;
+    background-color: $main-btn-color;
+    color: $secondary-text-color;
+    outline: none;
+    border-radius: $radi-btn;
+    border: none;
+    cursor: pointer;
+    transition: $transition-background-color;
+
+    &:disabled {
+        background-color: gray;
+    }
+
+    &:not(:disabled):hover {
+        background-color: $main-btn-hover-color;
+        box-shadow: $box-shadow;
+    }
+}
+
+%secondary-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    outline: none;
+    border-radius: $radi-btn;
+    border: none;
+    cursor: pointer;
+    transition: $transition-box-shadow;
+
+    &:hover {
+        box-shadow: $box-shadow;
+    }
+}
+

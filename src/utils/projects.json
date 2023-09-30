@@ -1,0 +1,38 @@
+[
+        {
+            "id": "id-1",
+            "name": "Amazing Project",
+            "author": "Alex",
+            "tasks": []
+        },
+        {
+            "id": "id-2",
+            "name": "Extraordinary Project",
+            "author": "Anna",
+            "tasks": []
+        },
+        {
+            "id": "id-3",
+            "name": "Cool Project",
+            "author": "Max",
+            "tasks": []
+        },
+        {
+            "id": "id-4",
+            "name": "Nice Project",
+            "author": "Anastasia",
+            "tasks": []
+        },
+        {
+            "id": "id-5",
+            "name": "Fantastic Project",
+            "author": "Katia",
+            "tasks": []
+        },
+        {
+            "id": "id-6",
+            "name": "Wow Project",
+            "author": "Leo",
+            "tasks": []
+        }
+    ]

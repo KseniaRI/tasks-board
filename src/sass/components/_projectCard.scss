@@ -1,0 +1,37 @@
+.projects-item {
+    flex-basis: 100%;
+
+    @media screen and (min-width: 420px) {
+        flex-basis: calc(100% / 2);
+    }
+    @media  screen and (min-width: 768px) {
+        flex-basis: calc(100% / 3 );
+    }
+    @media screen and (min-width: 1280px) {
+        flex-basis: calc(100% / 4);
+    }
+}
+
+.project-card{
+    @extend %card;
+    height: 208px;
+    padding: 30px;
+    justify-content: space-around;
+    cursor: pointer;
+    transition: $transition-background-color;
+
+    &:hover {
+        background-color: $card-hover-background-color;
+    }
+}
+
+.project-name {
+    font-size: $secondary-text-font-size;
+    color: $main-text-color;
+    font-weight: 600;
+}
+
+.project-author {
+    font-size: $secondary-text-font-size;
+    color: $main-text-color;
+}

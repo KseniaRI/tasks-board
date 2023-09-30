@@ -1,0 +1,15 @@
+@import "base/reset";
+
+@import "abstracts/variables";
+@import "abstracts/placeholders";
+
+@import "layout/sharedLayout";
+
+@import "pages/projectPage";
+@import "pages/tasksPage";
+
+@import "components/projectCard";
+@import "components/board";
+@import "components/boardColumn";
+@import "components/taskCard";
+@import "components/modalTask";
