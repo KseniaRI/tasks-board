@@ -1,12 +1,14 @@
 import { createPortal } from "react-dom";
-import { MouseEvent, FormEvent, useState } from 'react';
-import { GrClose } from 'react-icons/gr';
-import { ITask, Priority, TaskStatus } from "../types";
-import { useAppDispatch, useAppSelector } from "../redux/redux-hooks";
-import { addTask, setModalIsOpen, setTaskToEditId, updateTask } from "../redux/actions";
-import { getProjects, getSelectedProjectId, getTaskToEditId, getTasksOfSelectedProject } from "../redux/selectors";
+import { FormEvent, useState, ChangeEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import moment from "moment";
+import { useAppDispatch, useAppSelector } from "../../redux/redux-hooks";
+import { addTask, setModalTaskIsOpen, setTaskId, updateTask } from "../../redux/actions";
+import { getProjects, getSelectedProjectId, getTask, getTaskId, getTasksOfSelectedProject } from "../../redux/selectors";
+import { handleBackdropClick } from "../../utils/common";
+import { updateProjectsInLocalstorage } from "../../utils/localStorageOperations";
+import { ITask, Priority, TaskStatus } from "../../types";
+import CloseBtn from "../CloseBtn";
 
 const modalTaskRoot = document.querySelector('#modal-task')!;
 
@@ -14,6 +16,7 @@ interface IFormData {
     title: string;
     description: string;
     priority: Priority;
+    file: string;
 }
 
 const ModalTask = () => {
@@ -21,46 +24,70 @@ const ModalTask = () => {
     const projectId = useAppSelector(getSelectedProjectId);
     const projects = useAppSelector(getProjects);
     const tasks = useAppSelector(getTasksOfSelectedProject);
-    const taskToEditId = useAppSelector(getTaskToEditId); 
-    
-    const taskToEdit = tasks.find(task => task.id === taskToEditId);
+    const taskToEditId = useAppSelector(getTaskId); 
+    const taskToEdit = useAppSelector(getTask);
     
     const initialFormData = taskToEdit ?
         {
             title: taskToEdit.title,
             description: taskToEdit.description,
-            priority: taskToEdit.priority
+            priority: taskToEdit.priority,
+            file: ''
         } :
         {
             title: '',
             description: '',
-            priority: Priority.LOW
+            priority: Priority.LOW,
+            file: ''
         };
 
     const [formData, setFormData] = useState<IFormData>(initialFormData);
 
     const onClose = () => {
-        dispatch(setModalIsOpen(false));
-        dispatch(setTaskToEditId(''));
+        dispatch(setModalTaskIsOpen(false));
+        dispatch(setTaskId(''));
     }
-    const handleBackdropClick = (evt: MouseEvent<HTMLDivElement>) => {
-        if (evt.currentTarget === evt.target) {
-          onClose()
-        }
-    };
 
-    const handleInputChange = (evt: FormEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        const { name, value } = evt.currentTarget;
+    const handleInputChange = (evt: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = evt.target;
         setFormData({
             ...formData,
             [name]: value
         })
-    }
+    }  
+
+    const handleUpload = (e: ChangeEvent<HTMLInputElement>) => {
+        const maxSizeInBytes = 102400; // 100KB в байтах - чтобы не переполнять localStorage
+        const files = e.target.files;
+
+        if (files && files[0].size > maxSizeInBytes) { 
+            alert("Файл слишком большой. Максимальный размер файла 100KB.");
+            e.target.value = ''; 
+            return;
+        } else if (files) {
+            const fileUploaded = files[0];
+            let reader = new FileReader();
+            reader.onloadend = () => {
+                if (typeof (reader.result) === "string") {
+                    setFormData({
+                        ...formData,
+                        file: reader.result
+                    });
+                }
+            };
+            if (fileUploaded instanceof Blob) {
+                reader.readAsDataURL(fileUploaded);
+            } else {
+                alert("Invalid file format.");
+            }
+        } 
+    };
 
     const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        const { title, description, priority } = formData;
+        const { title, description, priority, file } = formData;
         let updatedTasks: ITask[] = [];
+        const files = file.length > 0 ? [file] : []; 
 
         if (!taskToEdit) {
             const newTask = {
@@ -71,7 +98,9 @@ const ModalTask = () => {
                 createdAt: moment().format(),
                 finishedAt: null,
                 priority,
-                status: TaskStatus.QUEUE
+                status: TaskStatus.QUEUE,
+                files,
+                comments: []
             }
             dispatch(addTask(projectId, newTask));
             updatedTasks = [...tasks, newTask];
@@ -80,39 +109,27 @@ const ModalTask = () => {
                 ...taskToEdit,
                 title,
                 description,
-                priority
+                priority,
+                files: [...taskToEdit.files, file]
             }
             dispatch(updateTask(projectId, taskToEditId, editedTask));
             updatedTasks = tasks.map(task => (task.id === taskToEditId ? editedTask : task));
         }
 
-        const updatedProjects = projects.map(project => {
-                if (project.id !== projectId) {
-                    return project;
-                } else {
-                    return {
-                        ...project,
-                        tasks: updatedTasks
-                    }
-                }
-            })
-            
-        localStorage.setItem("projects", JSON.stringify(updatedProjects));
+        updateProjectsInLocalstorage(projects, projectId, updatedTasks);
         setFormData(initialFormData);
         onClose();
     }
 
     const priorities = Object.values(Priority);
     const priorityOptions = priorities.map(priority => (
-        <option key={priority} value={priority}>{priority}</option>)
-    );
+        <option key={priority} value={priority}>{priority}</option>
+    ));
 
     return createPortal(
-        <div className="backdrop" onClick={handleBackdropClick}>
+        <div className="backdrop" onClick={(evt)=>handleBackdropClick(evt, onClose)}>
             <div className="modal-task">
-                <button className="modal-task-close" onClick={onClose}>
-                    <GrClose />
-                </button>
+                <CloseBtn onClose={onClose}/>  
                 <h3>{taskToEdit ? 'Edit task' : 'Create a new task'}</h3>
                 <form className="modal-task-form" onSubmit={handleSubmit}>
                     <div className="form-field-wrap">
@@ -157,6 +174,19 @@ const ModalTask = () => {
                         >
                             {priorityOptions}
                         </select>
+                    </div>
+                    <div className="form-field-wrap">
+                        <label className="form-label" htmlFor="file">
+                            Attach file:
+                        </label> 
+                        <input
+                            className="form-field"
+                            type="file"
+                            name="file"
+                            id="file"
+                            onChange={handleUpload}
+                            accept=".jpg, .jpeg, .png"
+                        />
                     </div>
                     <button className="modal-task-submit" type="submit" disabled={!formData.title || !formData.description}>
                         {taskToEdit ? 'Edit Task' : 'Add task'}

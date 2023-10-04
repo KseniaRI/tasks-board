@@ -1,10 +1,12 @@
 .task-card{
     @extend %card;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5px;
     margin: 0 auto;
     width: 95%;
-    padding: 20px;
-    gap: 10px;
-    align-items: flex-start;
+    padding: 10px;
     font-size: $secondary-text-font-size;
     overflow: hidden;
     transition: $transition-background-color;
@@ -14,25 +16,19 @@
     }
 }
 
+.task-card-content {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 10px;
+    grid-template-areas:
+        "task-title-wrap"
+        "task-card-text"
+        "task-label-wrap";
+}
 .task-title-wrap{
     width: 100%;
     display: flex;
-    justify-content: space-between;
-}
-.task-card-text{
-    text-align: left;
-}
-
-.task-label-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    align-self:normal;
-    gap: 10px;
-}
-
-.task-priority-wrap {
-    display: flex;
-    gap: 10px;
+    gap: 10px;;
 }
 
 .task-card-num {
@@ -47,16 +43,7 @@
     color: $main-text-color;
     font-weight: 600;
 }
-
-.task-card-label{
-    border-radius: $radi-label; 
-    width: 90px;
-    padding: 4px;
-    font-size: $small-text-font-size;
-    border: 1px solid $main-btn-color;
-    color: $main-text-color;
+.task-card-text {
+    text-align: left;
 }
 
-.task-edit-button {
-    @extend %secondary-btn
-}

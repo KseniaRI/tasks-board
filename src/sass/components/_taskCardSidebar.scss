@@ -1,0 +1,20 @@
+.task-card-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-left: 1px solid $main-background-color;
+    padding-left: 5px;
+}
+
+.task-card-priority {
+    align-self: flex-start;
+    padding-left: 5px;
+}
+
+.task-sidebar-button {
+    @extend %secondary-btn;
+    width: 50px;
+    gap: 5px;
+    font-size: $small-text-font-size;
+    justify-content: flex-start;
+}

@@ -10,6 +10,12 @@ export enum TaskStatus {
     'DONE' = 'Done'
 }
 
+export interface IComment {
+    id: string,
+    text: string,
+    replies: IComment[];
+}
+
 export interface ITask {
     id: string,
     num: number,
@@ -18,7 +24,9 @@ export interface ITask {
     createdAt: string,
     finishedAt: string | null,
     priority: Priority,
-    status: TaskStatus
+    status: TaskStatus,
+    files: string[],
+    comments: IComment[]
 }
 
 export interface IProject{
@@ -31,9 +39,12 @@ export interface IProject{
 export interface AppState {
     projects: IProject[]; 
     selectedProjectId: string;
-    modalIsOpen: boolean;
-    taskToEditId: string;
-    searchValue: string ;
+    taskId: string;
+    fileIdx: number;
+    searchValue: string;
+    modalTaskIsOpen: boolean;
+    modalFilesIsOpen: boolean;
+    modalCommentsIsOpen: boolean;
 }
 
 export interface IAddTaskAction{
@@ -69,16 +80,23 @@ export interface ISetSelectedProjectId {
 }
 
 export interface ISetModalIsOpen {
-    type: 'setModalIsOpen';
+    type: 'setModalTaskIsOpen' | 'setModalFilesIsOpen' | 'setModalCommentsIsOpen';
     payload: {
         modalIsOpen: boolean
     }
 }
 
-export interface ISetTaskToEditId {
-    type: 'setTaskToEditId',
+export interface ISetTaskId {
+    type: 'setTaskId',
     payload: {
         taskId: string
+    }
+}
+
+export interface ISetFileIdx {
+    type: 'setFileIdx',
+    payload: {
+        fileIdx: number;
     }
 }
 
@@ -96,4 +114,4 @@ export interface ISetsSearchValue {
     }
 }
 
-export type TaskActionType = IAddTaskAction | IDeleteTaskAction | IUpdateTaskAction | ISetSelectedProjectId | ISetModalIsOpen | ISetTaskToEditId | ISetProjects | ISetsSearchValue;
+export type TaskActionType = IAddTaskAction | IDeleteTaskAction | IUpdateTaskAction | ISetSelectedProjectId | ISetModalIsOpen | ISetTaskId | ISetProjects | ISetsSearchValue | ISetFileIdx;

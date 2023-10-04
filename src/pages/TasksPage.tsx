@@ -1,55 +1,59 @@
 import { FormEvent } from 'react';
-import Board from "../components/Board";
+import { NavLink } from 'react-router-dom';
+import { MdOutlineAddToPhotos} from "react-icons/md";
 import { useAppDispatch, useAppSelector } from "../redux/redux-hooks";
-import { getModalIsOpen, getSelectedProject, getTasksOfSelectedProject } from "../redux/selectors";
-import {  MdOutlineAddToPhotos, MdSearch} from "react-icons/md";
-import ModalTask from "../components/ModalTask";
-import { setModalIsOpen, setSearchValue } from "../redux/actions";
+import { setModalTaskIsOpen, setSearchValue } from "../redux/actions";
+import {
+    getModalCommentsIsOpen,
+    getModalFilesIsOpen,
+    getModalTaskIsOpen,
+    getSelectedProject,
+    getTasksOfSelectedProject
+} from "../redux/selectors";
+
+import ModalFiles from '../components/modals/ModalFiles';
+import ModalComments from '../components/modals/ModalComments';
+import ModalTask from "../components/modals/ModalTask";
+import SearchField from '../components/SearchField';
+import Board from "../components/board/Board";
 
 const TasksPage = () => {
     const selectedProject = useAppSelector(getSelectedProject);
     const tasks = useAppSelector(getTasksOfSelectedProject);
-    const modalIsOpen = useAppSelector(getModalIsOpen);
+    const modalTaskIsOpen = useAppSelector(getModalTaskIsOpen);
+    const modalFilesIsOpen = useAppSelector(getModalFilesIsOpen);
+    const modalCommentsIsOpen = useAppSelector(getModalCommentsIsOpen);
     const dispatch = useAppDispatch();
 
     const handleInputChange = (evt: FormEvent<HTMLInputElement>) => {
         const { value } = evt.currentTarget;
         dispatch(setSearchValue(value));
     }
-
-    if (selectedProject) {
+    if(selectedProject) {
         return (
             <>
                 <div className="tasks-page">
                     <div className="container tasks-container">
                         <div className="project-title-wrap">
                             <h1 className="project-title">{selectedProject.name}</h1>
-                             <button className="add-task-btn" onClick={()=>dispatch(setModalIsOpen(true))}>
+                             <button className="add-task-btn" onClick={()=>dispatch(setModalTaskIsOpen(true))}>
                                 <MdOutlineAddToPhotos /> 
                                 Add tasks
                             </button>
                         </div>
-                        {tasks.length > 0 && 
-                            <div className="search-wrap">
-                                <input className="task-search"
-                                    name="title"
-                                    type="text"
-                                    placeholder="Search by title or number of task"
-                                    onChange={handleInputChange}
-                                />
-                                <button className="search-btn">
-                                    <MdSearch />
-                                </button>
-                            </div> 
-                        }
+                        {tasks.length > 0 && <SearchField onChange={handleInputChange}/>}
                         <Board/>
                     </div>
                 </div>
-                {modalIsOpen && <ModalTask/>}
+                {modalTaskIsOpen && <ModalTask />}
+                {modalFilesIsOpen && <ModalFiles />}
+                {modalCommentsIsOpen && <ModalComments/>}
             </>
         )
     } else {
-        return <p>No project was selected</p>
+        return (
+            <NavLink className="task-page-link" to='/'>First select project</NavLink>
+        )
     }
 }
 

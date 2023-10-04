@@ -1,8 +1,8 @@
-import { useAppSelector } from "../redux/redux-hooks";
-import { getFilteredTasks } from "../redux/selectors";
-import { TaskStatus } from "../types";
-import TaskCard from "./TaskCard";
 import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { useAppSelector } from "../../redux/redux-hooks";
+import { getFilteredTasks } from "../../redux/selectors";
+import { TaskStatus } from "../../types";
+import TaskCard from "../taskCard/TaskCard";
 
 interface BoardColumnProps {
     status: TaskStatus;

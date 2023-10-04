@@ -1,0 +1,14 @@
+.modal-comments-form {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+.modal-comments-input {
+    width: 100%;
+    outline: none;
+}
+
+.modal-comments-button {
+    @extend %main-btn;
+}

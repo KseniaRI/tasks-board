@@ -5,11 +5,17 @@ export const getProjects = (state: RootState) => state.projects;
 
 export const getSelectedProjectId = (state: RootState) => state.selectedProjectId;
 
-export const getModalIsOpen = (state: RootState) => state.modalIsOpen;
+export const getModalTaskIsOpen = (state: RootState) => state.modalTaskIsOpen;
 
-export const getTaskToEditId = (state: RootState) => state.taskToEditId;
+export const getModalFilesIsOpen = (state: RootState) => state.modalFilesIsOpen;
+
+export const getModalCommentsIsOpen = (state: RootState) => state.modalCommentsIsOpen;
+
+export const getTaskId = (state: RootState) => state.taskId;
 
 export const getSearchValue = (state: RootState) => state.searchValue;
+
+export const getFileIdx = (state: RootState) => state.fileIdx;
 
 export const getSelectedProject = createSelector(
     [getSelectedProjectId, getProjects],
@@ -25,6 +31,12 @@ export const getTasksOfSelectedProject = createSelector(
     }
 )
 
+export const getTask = createSelector(
+    [getTasksOfSelectedProject, getTaskId],
+    (tasks, taskId) => {
+        return tasks.find(task => task.id === taskId);
+    }
+)
 export const getFilteredTasks = createSelector(
     [getTasksOfSelectedProject, getSearchValue],
     (tasks, searchValue) => {
@@ -36,5 +48,14 @@ export const getFilteredTasks = createSelector(
         return filteredTasks;
     }
 )
+
+export const getFilesOfTask = createSelector(
+    [getTasksOfSelectedProject, getTaskId],
+    (tasks, taskId) => {
+        return tasks.find(task => task.id === taskId)?.files;
+    }
+)
+
+
 
 

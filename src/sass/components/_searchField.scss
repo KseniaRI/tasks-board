@@ -1,0 +1,26 @@
+.search-wrap {
+    grid-area: search;
+    display: flex;
+    gap: 5px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.task-search {
+    padding: 8px;
+    border-radius: $radi-btn;
+    outline: none;
+    border: none;
+    width: 250px;
+}
+
+.search-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    background-color: transparent;
+    outline: none;
+    border-radius: $radi-btn;
+    border: none;
+}

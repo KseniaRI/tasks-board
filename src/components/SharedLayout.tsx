@@ -16,9 +16,9 @@ const SharedLayout = () => {
         
         if (storedSelectedProjectId) {
             dispatch(setSelectedProjectId(storedSelectedProjectId));
-        }  
-    },[storedProjects, storedSelectedProjectId, dispatch])
-
+        }
+    }, [storedProjects, storedSelectedProjectId, dispatch]);
+    
     return (
         <div className="layout-container">
             <header className="header">

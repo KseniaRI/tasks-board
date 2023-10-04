@@ -1,14 +1,16 @@
 import { AppState, IProject, TaskActionType } from '../types';
-// import { combineReducers } from 'redux';
 
 const projectsData: IProject[] = require('../utils/projects.json');
 
 const initialState: AppState = {
     projects: projectsData,
     selectedProjectId: '',
-    modalIsOpen: false,
-    taskToEditId: '',
-    searchValue: ''
+    taskId: '',
+    fileIdx: 0,
+    searchValue: '',
+    modalTaskIsOpen: false,
+    modalFilesIsOpen: false,
+    modalCommentsIsOpen: false,
 }
 
 function tasksReducer(state: AppState = initialState, action: TaskActionType): AppState {
@@ -72,10 +74,16 @@ function tasksReducer(state: AppState = initialState, action: TaskActionType): A
                 selectedProjectId: action.payload.projectId
             }
         }
-        case ('setTaskToEditId'): {
+        case ('setTaskId'): {
             return {
                 ...state,
-                taskToEditId: action.payload.taskId
+                taskId: action.payload.taskId
+            }
+        }
+        case ('setFileIdx'): {
+            return {
+                ...state,
+                fileIdx: action.payload.fileIdx
             }
         }
         case ('setSelectedProjectId'): {
@@ -90,33 +98,33 @@ function tasksReducer(state: AppState = initialState, action: TaskActionType): A
                 projects: action.payload.projects
             }
         }
-        case ('setModalIsOpen'): {
-            return {
-                ...state,
-                modalIsOpen: action.payload.modalIsOpen
-            }
-        }
         case ('setSearchValue'): {
             return {
                 ...state,
                 searchValue: action.payload.searchValue
             }
         }
+        case ('setModalTaskIsOpen'): {
+            return {
+                ...state,
+                modalTaskIsOpen: action.payload.modalIsOpen
+            }
+        }
+        case ('setModalFilesIsOpen'): {
+            return {
+                ...state,
+                modalFilesIsOpen: action.payload.modalIsOpen
+            }
+        }
+        case ('setModalCommentsIsOpen'): {
+            return {
+                ...state,
+                modalCommentsIsOpen: action.payload.modalIsOpen
+            }
+        }
         default:
             return state;   
     }
 }
-
-// const initialModalState = {
-//     modalIsOpen: false
-// }
-// interface IModalState {
-//     modalIsOpen: boolean
-// }
-// function modalReducer (state: IModalState = initialModalState, action: ISetModalIsOpen): IModalState {
-//     return {
-//         modalIsOpen: action.payload.modalIsOpen
-//     }
-// }
 
 export default tasksReducer;

@@ -29,24 +29,12 @@
     @extend %main-btn;
     justify-content: space-between;
 }
-.search-wrap {
-    grid-area: search;
-    display: flex;
-    gap: 5px;
-    margin: 0 auto;
-    margin-bottom: 20px;
-}
 
-.task-search {
-    padding: 8px;
-    border-radius: $radi-btn;
-    outline: none;
-    border: none;
-    width: 250px;
-}
-
-.search-btn {
+.task-page-link{
     @extend %secondary-btn;
-    height: 35px;
-    
+    border: 1px solid $main-background-color;
+    font-size: $main-text-font-size;
+    padding: 20px;
+    width: auto;
+    margin: auto;
 }

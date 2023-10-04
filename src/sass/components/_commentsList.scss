@@ -1,0 +1,15 @@
+.modal-comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.modal-comments-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid $main-background-color;
+    border-radius: $radi-label;
+}

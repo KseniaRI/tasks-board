@@ -1,0 +1,15 @@
+.task-dates-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-self: normal;
+    gap: 10px;
+}
+
+.task-card-date {
+    border-radius: $radi-label;
+    width: 90px;
+    padding: 4px;
+    font-size: $small-text-font-size;
+    border: 1px solid $main-btn-color;
+    color: $main-text-color;
+}

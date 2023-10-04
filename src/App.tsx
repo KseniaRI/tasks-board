@@ -1,4 +1,3 @@
-import React from 'react';
 import ProjectsPage from './pages/ProjectsPage';
 import TasksPage from './pages/TasksPage';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';

@@ -2,10 +2,11 @@ import {
     IAddTaskAction,
     IDeleteTaskAction,
     IProject,
+    ISetFileIdx,
     ISetModalIsOpen,
     ISetProjects,
     ISetSelectedProjectId,
-    ISetTaskToEditId,
+    ISetTaskId,
     ISetsSearchValue,
     ITask,
     IUpdateTaskAction
@@ -36,17 +37,34 @@ export const setProjects = (projects: IProject[]): ISetProjects => ({
     payload: {projects}
 })
 
-export const setModalIsOpen = (modalIsOpen: boolean): ISetModalIsOpen => ({
-    type: 'setModalIsOpen',
+export const setModalTaskIsOpen = (modalIsOpen: boolean): ISetModalIsOpen => ({
+    type: 'setModalTaskIsOpen',
     payload: {modalIsOpen}
 })
 
-export const setTaskToEditId = (taskId: string): ISetTaskToEditId => ({
-    type: 'setTaskToEditId',
+export const setModalFilesIsOpen = (modalIsOpen: boolean): ISetModalIsOpen => ({
+    type: 'setModalFilesIsOpen',
+    payload: {modalIsOpen}
+})
+
+export const setModalCommentsIsOpen = (modalIsOpen: boolean): ISetModalIsOpen => ({
+    type: 'setModalCommentsIsOpen',
+    payload: {modalIsOpen}
+})
+
+export const setTaskId = (taskId: string): ISetTaskId => ({
+    type: 'setTaskId',
     payload: {taskId}
+})
+
+export const setFileIdx = (fileIdx: number): ISetFileIdx => ({
+    type: 'setFileIdx',
+    payload: {fileIdx}
 })
 
 export const setSearchValue = (searchValue: string ): ISetsSearchValue => ({
     type: 'setSearchValue',
     payload: {searchValue}
 })
+
+

@@ -1,0 +1,8 @@
+.modal-comments {
+    @extend %modal;
+    gap: 20px;
+    align-items: center;
+    width: 560px;
+    height: 700px;
+    overflow-y: auto;
+}
