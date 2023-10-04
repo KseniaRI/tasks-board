@@ -1,11 +1,11 @@
 import { createPortal } from "react-dom";
-import { FormEvent, useState, ChangeEvent } from 'react';
+import { FormEvent, useState, ChangeEvent, useEffect, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import moment from "moment";
 import { useAppDispatch, useAppSelector } from "../../redux/redux-hooks";
 import { addTask, setModalTaskIsOpen, setTaskId, updateTask } from "../../redux/actions";
 import { getProjects, getSelectedProjectId, getTask, getTaskId, getTasksOfSelectedProject } from "../../redux/selectors";
-import { handleBackdropClick } from "../../utils/common";
+import { handleBackdropClick } from "../../utils/commonHelpers";
 import { updateProjectsInLocalstorage } from "../../utils/localStorageOperations";
 import { ITask, Priority, TaskStatus } from "../../types";
 import CloseBtn from "../CloseBtn";
@@ -27,6 +27,21 @@ const ModalTask = () => {
     const taskToEditId = useAppSelector(getTaskId); 
     const taskToEdit = useAppSelector(getTask);
     
+    const onClose = useCallback(() => {
+        dispatch(setModalTaskIsOpen(false));
+        dispatch(setTaskId(''));
+    }, [dispatch])
+
+    useEffect(() => {
+        const handleKeyPress = (evt: KeyboardEvent) => {
+            if (evt.key === 'Escape') {
+              onClose();
+            }
+        };
+        window.addEventListener('keydown', handleKeyPress);
+        return () => window.removeEventListener('keydown', handleKeyPress);
+    }, [onClose]);
+
     const initialFormData = taskToEdit ?
         {
             title: taskToEdit.title,
@@ -42,11 +57,6 @@ const ModalTask = () => {
         };
 
     const [formData, setFormData] = useState<IFormData>(initialFormData);
-
-    const onClose = () => {
-        dispatch(setModalTaskIsOpen(false));
-        dispatch(setTaskId(''));
-    }
 
     const handleInputChange = (evt: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = evt.target;

@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { createPortal } from "react-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/redux-hooks";
 import { setModalFilesIsOpen, setTaskId } from "../../redux/actions";
 import { getFileIdx, getFilesOfTask } from "../../redux/selectors";
-import { handleBackdropClick } from "../../utils/common";
+import { handleBackdropClick } from "../../utils/commonHelpers";
 import CloseBtn from '../CloseBtn';
 
 const modalFilesRoot = document.querySelector('#modal-files')!;
@@ -13,6 +13,21 @@ const ModalFiles = () => {
     const fileIdx = useAppSelector(getFileIdx);
     const files = useAppSelector(getFilesOfTask);
 
+    const onClose = useCallback(() => {
+        dispatch(setModalFilesIsOpen(false));
+        dispatch(setTaskId(''));
+    }, [dispatch]);
+    
+    useEffect(() => {
+        const handleKeyPress = (evt: KeyboardEvent) => {
+            if (evt.key === 'Escape') {
+              onClose();
+            }
+        };
+        window.addEventListener('keydown', handleKeyPress);
+        return () => window.removeEventListener('keydown', handleKeyPress);
+    }, [onClose]);
+
     const orderFiles = (files: string[], idx: number) => {
         if (files) {
             return [files[idx], ...files.slice(0, idx), ...files.slice(idx + 1)];
@@ -21,11 +36,6 @@ const ModalFiles = () => {
 
     const initialOrderedFiles = files && orderFiles(files, fileIdx);
     const [reorderedFiles, setReorderedFiles] = useState(initialOrderedFiles);
-
-    const onClose = () => {
-        dispatch(setModalFilesIsOpen(false));
-        dispatch(setTaskId(''));
-    }
 
     const onFileClick = (index: number) => {
         if (reorderedFiles) {

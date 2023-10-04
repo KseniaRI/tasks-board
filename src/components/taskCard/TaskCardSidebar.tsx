@@ -1,5 +1,6 @@
 import { AiFillFire, AiOutlineComment, AiOutlineEdit, AiOutlinePaperClip } from "react-icons/ai";
 import { ITask, Priority } from "../../types";
+import { countComments } from "../../utils/commonHelpers";
 
 interface TaskCardSidebarProps {
     task: ITask,
@@ -13,6 +14,8 @@ const TaskCardSidebar = ({ task, onTaskEdit, onFilesShow, onCommentsShow }: Task
     const priorityColor = task.priority === Priority.LOW ?
         'green' :
         (task.priority === Priority.HIGH ? 'orange' : 'red');
+
+    const totalComments = countComments(task);
     
     return (
         <div className="task-card-sidebar">
@@ -30,7 +33,7 @@ const TaskCardSidebar = ({ task, onTaskEdit, onFilesShow, onCommentsShow }: Task
             )}
             <button className="task-sidebar-button" onClick={onCommentsShow}>
                 <AiOutlineComment size={20} />
-                <span>{task.comments.length > 0 ? task.comments.length : null}</span>
+                <span>{task.comments.length > 0 ? totalComments : null}</span>
             </button> 
         </div>
     )

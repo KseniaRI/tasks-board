@@ -1,11 +1,11 @@
 import { createPortal } from "react-dom";
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useEffect, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppDispatch, useAppSelector } from "../../redux/redux-hooks";
 import { getProjects, getSelectedProjectId, getTask, getTaskId, getTasksOfSelectedProject } from "../../redux/selectors";
 import { setModalCommentsIsOpen, setTaskId, updateTask } from "../../redux/actions";
 import { updateProjectsInLocalstorage } from "../../utils/localStorageOperations";
-import { handleBackdropClick } from "../../utils/common";
+import { handleBackdropClick } from "../../utils/commonHelpers";
 import { IComment, ITask } from "../../types";
 import CloseBtn from "../CloseBtn";
 import CommentsList from "../comment/CommentsList";
@@ -23,7 +23,22 @@ const ModalComments = () => {
 
     const [commentText, setCommentText] = useState('');
     const [replies, setReplies] = useState<IComment[]>([]);
-    
+
+    const onClose = useCallback(() => {
+        dispatch(setModalCommentsIsOpen(false));
+        dispatch(setTaskId(''));
+    }, [dispatch]);
+
+    useEffect(() => {
+        const handleKeyPress = (evt: KeyboardEvent) => {
+            if (evt.key === 'Escape') {
+              onClose();
+            }
+        };
+        window.addEventListener('keydown', handleKeyPress);
+        return () => window.removeEventListener('keydown', handleKeyPress);
+    }, [onClose]);
+
     const updateReplies = (currentComments: IComment[], parentCommentId: string, newReply: IComment): IComment[] => {
         return currentComments.map(comment => {
             if (comment.id === parentCommentId) {
@@ -60,11 +75,6 @@ const ModalComments = () => {
             updateProjectsInLocalstorage(projects, projectId, updatedTasks);
         }
     };
-
-    const onClose = () => {
-        dispatch(setModalCommentsIsOpen(false));
-        dispatch(setTaskId(''));
-    }
 
     const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
