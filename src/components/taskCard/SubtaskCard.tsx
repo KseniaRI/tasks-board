@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { MdDoneOutline } from 'react-icons/md';
 import { useAppDispatch, useAppSelector } from "../../redux/redux-hooks";
 import { getProjects, getSelectedProjectId, getTask, getTasksOfSelectedProject } from "../../redux/selectors";
