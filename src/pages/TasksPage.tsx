@@ -6,6 +6,7 @@ import { setModalTaskIsOpen, setSearchValue } from "../redux/actions";
 import {
     getModalCommentsIsOpen,
     getModalFilesIsOpen,
+    getModalSubtaskIsOpen,
     getModalTaskIsOpen,
     getSelectedProject,
     getTasksOfSelectedProject
@@ -16,6 +17,7 @@ import ModalComments from '../components/modals/ModalComments';
 import ModalTask from "../components/modals/ModalTask";
 import SearchField from '../components/SearchField';
 import Board from "../components/board/Board";
+import ModalSubtask from '../components/modals/ModalSubtask';
 
 const TasksPage = () => {
     const selectedProject = useAppSelector(getSelectedProject);
@@ -23,6 +25,7 @@ const TasksPage = () => {
     const modalTaskIsOpen = useAppSelector(getModalTaskIsOpen);
     const modalFilesIsOpen = useAppSelector(getModalFilesIsOpen);
     const modalCommentsIsOpen = useAppSelector(getModalCommentsIsOpen);
+    const modalSubtaskIsOpen = useAppSelector(getModalSubtaskIsOpen);
     const dispatch = useAppDispatch();
 
     const handleInputChange = (evt: FormEvent<HTMLInputElement>) => {
@@ -47,7 +50,8 @@ const TasksPage = () => {
                 </div>
                 {modalTaskIsOpen && <ModalTask />}
                 {modalFilesIsOpen && <ModalFiles />}
-                {modalCommentsIsOpen && <ModalComments/>}
+                {modalCommentsIsOpen && <ModalComments />}
+                {modalSubtaskIsOpen && <ModalSubtask/>}
             </>
         )
     } else {

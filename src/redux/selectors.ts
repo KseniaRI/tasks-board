@@ -11,6 +11,8 @@ export const getModalFilesIsOpen = (state: RootState) => state.modalFilesIsOpen;
 
 export const getModalCommentsIsOpen = (state: RootState) => state.modalCommentsIsOpen;
 
+export const getModalSubtaskIsOpen = (state: RootState) => state.modalSubtaskIsOpen;
+
 export const getTaskId = (state: RootState) => state.taskId;
 
 export const getSearchValue = (state: RootState) => state.searchValue;

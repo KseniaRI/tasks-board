@@ -1,23 +1,18 @@
 import { createPortal } from "react-dom";
 import { FormEvent, useState, ChangeEvent, useEffect, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { toast } from "react-toastify";
 import moment from "moment";
 import { useAppDispatch, useAppSelector } from "../../redux/redux-hooks";
 import { addTask, setModalTaskIsOpen, setTaskId, updateTask } from "../../redux/actions";
 import { getProjects, getSelectedProjectId, getTask, getTaskId, getTasksOfSelectedProject } from "../../redux/selectors";
 import { handleBackdropClick } from "../../utils/commonHelpers";
 import { updateProjectsInLocalstorage } from "../../utils/localStorageOperations";
-import { ITask, Priority, TaskStatus } from "../../types";
+import { IFormData, ITask, Priority, TaskStatus } from "../../types";
 import CloseBtn from "../CloseBtn";
+import TaskForm from "./TaskForm";
 
 const modalTaskRoot = document.querySelector('#modal-task')!;
-
-interface IFormData {
-    title: string;
-    description: string;
-    priority: Priority;
-    file: string;
-}
 
 const ModalTask = () => {
     const dispatch = useAppDispatch();
@@ -42,18 +37,18 @@ const ModalTask = () => {
         return () => window.removeEventListener('keydown', handleKeyPress);
     }, [onClose]);
 
-    const initialFormData = taskToEdit ?
+    const initialFormData: IFormData = taskToEdit ?
         {
             title: taskToEdit.title,
             description: taskToEdit.description,
             priority: taskToEdit.priority,
-            file: ''
+            file: undefined
         } :
         {
             title: '',
             description: '',
             priority: Priority.LOW,
-            file: ''
+            file: undefined
         };
 
     const [formData, setFormData] = useState<IFormData>(initialFormData);
@@ -66,13 +61,13 @@ const ModalTask = () => {
         })
     }  
 
-    const handleUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleUpload = (evt: ChangeEvent<HTMLInputElement>) => {
         const maxSizeInBytes = 102400; // 100KB в байтах - чтобы не переполнять localStorage
-        const files = e.target.files;
+        const files = evt.target.files;
 
         if (files && files[0].size > maxSizeInBytes) { 
             alert("Файл слишком большой. Максимальный размер файла 100KB.");
-            e.target.value = ''; 
+            evt.target.value = ''; 
             return;
         } else if (files) {
             const fileUploaded = files[0];
@@ -88,7 +83,7 @@ const ModalTask = () => {
             if (fileUploaded instanceof Blob) {
                 reader.readAsDataURL(fileUploaded);
             } else {
-                alert("Invalid file format.");
+                toast.error("Invalid file format.");
             }
         } 
     };
@@ -97,7 +92,7 @@ const ModalTask = () => {
         evt.preventDefault();
         const { title, description, priority, file } = formData;
         let updatedTasks: ITask[] = [];
-        const files = file.length > 0 ? [file] : []; 
+        const files = (file && file.length > 0) ? [file] : []; 
 
         if (!taskToEdit) {
             const newTask = {
@@ -110,20 +105,22 @@ const ModalTask = () => {
                 priority,
                 status: TaskStatus.QUEUE,
                 files,
-                comments: []
+                comments: [],
+                subtasks: []
             }
             dispatch(addTask(projectId, newTask));
             updatedTasks = [...tasks, newTask];
         } else {
+            const files = file ? [...taskToEdit.files, file] : taskToEdit.files;
             const editedTask = {
                 ...taskToEdit,
                 title,
                 description,
                 priority,
-                files: [...taskToEdit.files, file]
+                files
             }
             dispatch(updateTask(projectId, taskToEditId, editedTask));
-            updatedTasks = tasks.map(task => (task.id === taskToEditId ? editedTask : task));
+            updatedTasks = tasks.map(task => (task.id === taskToEditId ? editedTask : task)); 
         }
 
         updateProjectsInLocalstorage(projects, projectId, updatedTasks);
@@ -131,77 +128,23 @@ const ModalTask = () => {
         onClose();
     }
 
-    const priorities = Object.values(Priority);
-    const priorityOptions = priorities.map(priority => (
-        <option key={priority} value={priority}>{priority}</option>
-    ));
-
+    const defaultValues = {
+        title: taskToEdit?.title,
+        description: taskToEdit?.description,
+        priority: taskToEdit?.priority
+    }
     return createPortal(
         <div className="backdrop" onClick={(evt)=>handleBackdropClick(evt, onClose)}>
             <div className="modal-task">
                 <CloseBtn onClose={onClose}/>  
                 <h3>{taskToEdit ? 'Edit task' : 'Create a new task'}</h3>
-                <form className="modal-task-form" onSubmit={handleSubmit}>
-                    <div className="form-field-wrap">
-                        <label className="form-label" htmlFor="title">
-                            Task title:
-                        </label>
-                        <input
-                            className="form-field"
-                            name="title" id="title"
-                            type="text"
-                            onChange={handleInputChange}
-                            defaultValue={taskToEdit?.title}
-                            maxLength={40}
-                            required
-                        />
-                    </div>
-                    <div className="form-field-wrap">
-                        <label className="form-label" htmlFor="description">
-                            Task description:
-                        </label>
-                        <textarea
-                            className="form-field"
-                            name="description"
-                            id="description"
-                            onChange={handleInputChange}
-                            defaultValue={taskToEdit?.description}
-                            maxLength={150}
-                            required
-                        />
-                    </div>
-                    <div className="form-field-wrap">
-                        <label className="form-label" htmlFor="priority">
-                            Task priority:
-                        </label>
-                        <select
-                            className="form-field"
-                            name="priority"
-                            id="priority"
-                            onChange={handleInputChange}
-                            defaultValue={taskToEdit?.priority || Priority.LOW}
-                            required
-                        >
-                            {priorityOptions}
-                        </select>
-                    </div>
-                    <div className="form-field-wrap">
-                        <label className="form-label" htmlFor="file">
-                            Attach file:
-                        </label> 
-                        <input
-                            className="form-field"
-                            type="file"
-                            name="file"
-                            id="file"
-                            onChange={handleUpload}
-                            accept=".jpg, .jpeg, .png"
-                        />
-                    </div>
-                    <button className="modal-task-submit" type="submit" disabled={!formData.title || !formData.description}>
-                        {taskToEdit ? 'Edit Task' : 'Add task'}
-                    </button>
-                </form>
+                <TaskForm
+                    handleSubmit={handleSubmit}
+                    handleInputChange={handleInputChange}
+                    handleUpload={handleUpload}
+                    defaultValues={defaultValues}
+                    type={taskToEdit ? 'Edit Task' : 'Add task'}
+                />
             </div>
         </div>,
         modalTaskRoot

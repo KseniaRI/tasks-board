@@ -52,6 +52,11 @@ export const setModalCommentsIsOpen = (modalIsOpen: boolean): ISetModalIsOpen =>
     payload: {modalIsOpen}
 })
 
+export const setModalSubtaskIsOpen = (modalIsOpen: boolean): ISetModalIsOpen => ({
+    type: 'setModalSubtaskIsOpen',
+    payload: {modalIsOpen}
+})
+
 export const setTaskId = (taskId: string): ISetTaskId => ({
     type: 'setTaskId',
     payload: {taskId}

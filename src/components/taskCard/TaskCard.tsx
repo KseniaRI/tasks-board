@@ -10,13 +10,14 @@ import { ITask } from "../../types";
 import TaskCardSidebar from "./TaskCardSidebar";
 import TaskCardDates from "./TaskCardDates";
 import TaskCardFiles from "./TaskCardFiles";
+import TaskCardSubtasks from "./TaskCardSubtasks";
 
 interface TaskCardProps {
-    task: ITask
+    task: ITask;
 }
 
 const TaskCard = ({ task }: TaskCardProps) => {
-    const { num, title, description } = task;
+    const { num, title, description, files } = task;
     
     const dispatch = useAppDispatch(); 
 
@@ -35,16 +36,17 @@ const TaskCard = ({ task }: TaskCardProps) => {
         dispatch(setModalCommentsIsOpen(true));
         dispatch(setTaskId(task.id));
     }
-
+    
     return (
-        <div className="task-card">
+        <div className='task-card'>
             <div className="task-card-content">
                 <div className="task-title-wrap">
                     <span className="task-card-num">{num}</span>
                     <h3 className="task-card-text">{title}</h3>
                 </div>
                 <p className="task-card-text">{description}</p>
-                <TaskCardFiles task={task} onFilesShow={onFilesShow}/>
+                {files.length > 0 && <TaskCardFiles task={task} onFilesShow={onFilesShow} />}
+                <TaskCardSubtasks task={task} />
                 <TaskCardDates task={task}/>
             </div>
             <TaskCardSidebar

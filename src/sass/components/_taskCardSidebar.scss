@@ -18,3 +18,71 @@
     font-size: $small-text-font-size;
     justify-content: flex-start;
 }
+
+.task-sidebar-button.edit{
+    position: relative;
+    &::after {
+        content: 'edit task';
+        position: absolute;
+        top: 50%;
+        left: -65px;
+        transform: translateY(-50%);
+        border: 1px solid $main-background-color;
+        background-color: $main-btn-color;
+        color: $secondary-text-color;
+        border-radius: $radi-btn;
+        width: 60px;
+        padding: 5px;
+        z-index: 2;
+        opacity: 0
+    }
+    &:hover::after {
+        opacity: 1;
+    }
+}
+
+.task-sidebar-button.files{
+    position: relative;
+    &::after {
+        content: 'attached files';
+        position: absolute;
+        top: 50%;
+        left: -65px;
+        transform: translateY(-50%);
+        border: 1px solid $main-background-color;
+        background-color: $main-btn-color;
+        color: $secondary-text-color;
+        border-radius: $radi-btn;
+        width: 60px;
+        padding: 5px;
+        z-index: 2;
+        opacity: 0
+    }
+    &:hover::after {
+        opacity: 1;
+    }
+}
+
+.task-sidebar-button.comments {
+    position: relative;
+
+    &::after {
+        content: 'add comment';
+        position: absolute;
+        top: 50%;
+        left: -65px;
+        transform: translateY(-50%);
+        border: 1px solid $main-background-color;
+        background-color: $main-btn-color;
+        color: $secondary-text-color;
+        border-radius: $radi-btn;
+        width: 60px;
+        padding: 5px;
+        z-index: 3;
+        opacity: 0
+    }
+
+    &:hover::after {
+        opacity: 1;
+    }
+}

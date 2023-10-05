@@ -22,16 +22,16 @@ const TaskCardSidebar = ({ task, onTaskEdit, onFilesShow, onCommentsShow }: Task
             <span className="task-card-priority">
                 <AiFillFire color={priorityColor} size={20} />
             </span>
-            <button className="task-sidebar-button" onClick={onTaskEdit}>
+            <button className="task-sidebar-button edit" onClick={onTaskEdit}>
                 <AiOutlineEdit size={20}/>
             </button>
             {task.files.length > 0 && (
-                <button className="task-sidebar-button" onClick={()=>onFilesShow(0)}>
+                <button className="task-sidebar-button files" onClick={()=>onFilesShow(0)}>
                     <AiOutlinePaperClip size={20} />
                     <span>{task.files.length}</span>
                 </button>
             )}
-            <button className="task-sidebar-button" onClick={onCommentsShow}>
+            <button className="task-sidebar-button comments" onClick={onCommentsShow}>
                 <AiOutlineComment size={20} />
                 <span>{task.comments.length > 0 ? totalComments : null}</span>
             </button> 

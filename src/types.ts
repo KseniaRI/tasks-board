@@ -16,17 +16,32 @@ export interface IComment {
     replies: IComment[];
 }
 
+export interface IFormData {
+    title: string;
+    description: string;
+    priority: Priority;
+    file: string | undefined;
+}
+export interface ISubtask {
+    id: string;
+    parentTaskId: string;
+    num: number;
+    title: string;
+    description: string;
+    doneStatus: boolean;
+}
 export interface ITask {
-    id: string,
-    num: number,
-    title: string,
-    description: string,
-    createdAt: string,
-    finishedAt: string | null,
-    priority: Priority,
-    status: TaskStatus,
-    files: string[],
-    comments: IComment[]
+    id: string;
+    num: number;
+    title: string;
+    description: string;
+    createdAt: string;
+    finishedAt: string | null;
+    priority: Priority;
+    status: TaskStatus;
+    files: string[];
+    comments: IComment[];
+    subtasks: ISubtask[];
 }
 
 export interface IProject{
@@ -45,6 +60,7 @@ export interface AppState {
     modalTaskIsOpen: boolean;
     modalFilesIsOpen: boolean;
     modalCommentsIsOpen: boolean;
+    modalSubtaskIsOpen: boolean;
 }
 
 export interface IAddTaskAction{
@@ -80,7 +96,7 @@ export interface ISetSelectedProjectId {
 }
 
 export interface ISetModalIsOpen {
-    type: 'setModalTaskIsOpen' | 'setModalFilesIsOpen' | 'setModalCommentsIsOpen';
+    type: 'setModalTaskIsOpen' | 'setModalFilesIsOpen' | 'setModalCommentsIsOpen' | 'setModalSubtaskIsOpen';
     payload: {
         modalIsOpen: boolean
     }

@@ -11,6 +11,7 @@ const initialState: AppState = {
     modalTaskIsOpen: false,
     modalFilesIsOpen: false,
     modalCommentsIsOpen: false,
+    modalSubtaskIsOpen: false
 }
 
 function tasksReducer(state: AppState = initialState, action: TaskActionType): AppState {
@@ -120,6 +121,12 @@ function tasksReducer(state: AppState = initialState, action: TaskActionType): A
             return {
                 ...state,
                 modalCommentsIsOpen: action.payload.modalIsOpen
+            }
+        }
+        case ('setModalSubtaskIsOpen'): {
+            return {
+                ...state,
+                modalSubtaskIsOpen: action.payload.modalIsOpen
             }
         }
         default:

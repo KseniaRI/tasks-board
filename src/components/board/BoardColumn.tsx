@@ -21,8 +21,8 @@ const BoardColumn = ({ status }: BoardColumnProps) => {
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                     >
-                        {tasksByStatus?.map((task, index) => (
-                            <Draggable key={task.id} draggableId={task.id} index={index}>
+                        {tasksByStatus?.map((task, taskIndex) => (
+                            <Draggable key={task.id} draggableId={task.id} index={taskIndex}>
                                 {(provided) => (
                                     <div key={task.id}
                                         ref={provided.innerRef}

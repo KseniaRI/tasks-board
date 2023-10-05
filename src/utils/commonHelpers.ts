@@ -7,7 +7,7 @@ export const handleBackdropClick = (evt: MouseEvent<HTMLDivElement>, onClose: ()
     }
 };
 
-export const countComments = (task: ITask): number => {
+export const countComments = (task: ITask ): number => {
     return task.comments.reduce((count, comment) => count + countReplies(comment.replies), task.comments.length);
 }
     

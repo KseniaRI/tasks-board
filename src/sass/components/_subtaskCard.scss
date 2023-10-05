@@ -1,0 +1,57 @@
+.subtask-card {
+    @extend %card;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: $card-secondary-background-color;
+    font-size: $small-text-font-size;
+    overflow: hidden;
+}
+
+.subtask-done-status{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+
+    & span{
+        width: 80px;
+        text-align: start;
+    }
+}
+
+.subtask-done-btn {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: $radi-btn;
+    outline: none;
+    border: 1px solid $main-background-color;
+    cursor: pointer;
+}
+
+.subtask-confirm-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 30px;
+    background-color: #5AA16D;
+    color: $secondary-text-color;
+    outline: none;
+    border-radius: $radi-btn;
+    border: none;
+    cursor: pointer;
+    transition: $transition-background-color;
+
+    &:hover {
+        background-color: #4C845B;
+    }
+}
