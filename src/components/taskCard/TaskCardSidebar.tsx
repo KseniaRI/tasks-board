@@ -1,4 +1,9 @@
-import { AiFillFire, AiOutlineComment, AiOutlineEdit, AiOutlinePaperClip } from "react-icons/ai";
+import {
+    AiFillFire,
+    AiOutlineComment,
+    AiOutlineEdit,
+    AiOutlinePaperClip
+} from "react-icons/ai";
 import { ITask, Priority } from "../../types";
 import { countComments } from "../../utils/commonHelpers";
 
@@ -10,12 +15,13 @@ interface TaskCardSidebarProps {
 }
     
 const TaskCardSidebar = ({ task, onTaskEdit, onFilesShow, onCommentsShow }: TaskCardSidebarProps) => {
+    const { priority, files, comments } = task;
 
-    const priorityColor = task.priority === Priority.LOW ?
+    const priorityColor = priority === Priority.LOW ?
         'green' :
-        (task.priority === Priority.HIGH ? 'orange' : 'red');
+        (priority === Priority.HIGH ? 'orange' : 'red');
 
-    const totalComments = countComments(task);
+    const totalComments = countComments(comments);
     
     return (
         <div className="task-card-sidebar">
@@ -25,15 +31,15 @@ const TaskCardSidebar = ({ task, onTaskEdit, onFilesShow, onCommentsShow }: Task
             <button className="task-sidebar-button edit" onClick={onTaskEdit}>
                 <AiOutlineEdit size={20}/>
             </button>
-            {task.files.length > 0 && (
+            {files.length > 0 && (
                 <button className="task-sidebar-button files" onClick={()=>onFilesShow(0)}>
                     <AiOutlinePaperClip size={20} />
-                    <span>{task.files.length}</span>
+                    <span>{files.length}</span>
                 </button>
             )}
             <button className="task-sidebar-button comments" onClick={onCommentsShow}>
                 <AiOutlineComment size={20} />
-                <span>{task.comments.length > 0 ? totalComments : null}</span>
+                <span>{comments.length > 0 ? totalComments : null}</span>
             </button> 
         </div>
     )

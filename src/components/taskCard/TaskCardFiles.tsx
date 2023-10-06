@@ -1,16 +1,16 @@
 import {AiOutlinePaperClip } from "react-icons/ai";
-import { ITask } from "../../types";
 
 interface TaskCardFilesProps {
-    task: ITask;
+    files: string[];
     onFilesShow: (index: number) => void;
 }
 
-const TaskCardFiles = ({ task, onFilesShow }: TaskCardFilesProps) => {
-    const { files } = task;
+const TaskCardFiles = ({ files, onFilesShow }: TaskCardFilesProps) => {
     return (
         <div className="task-card-section">
-            <span className="section-icon"><AiOutlinePaperClip size={20}/></span>
+            <span className="section-icon">
+                <AiOutlinePaperClip size={20} />
+            </span>
             <ul className="task-card-files">
                 {files?.length > 0 && files.map((file,index) => (
                     <li

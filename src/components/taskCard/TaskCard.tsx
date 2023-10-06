@@ -29,6 +29,7 @@ const TaskCard = ({ task }: TaskCardProps) => {
     const onFilesShow = (index: number) => {
         dispatch(setModalFilesIsOpen(true));
         dispatch(setTaskId(task.id));
+        //set index of file to be shown first in gallery:
         dispatch(setFileIdx(index));
     }
 
@@ -42,10 +43,10 @@ const TaskCard = ({ task }: TaskCardProps) => {
             <div className="task-card-content">
                 <div className="task-title-wrap">
                     <span className="task-card-num">{num}</span>
-                    <h3 className="task-card-text">{title}</h3>
+                    <h3>{title}</h3>
                 </div>
                 <p className="task-card-text">{description}</p>
-                {files.length > 0 && <TaskCardFiles task={task} onFilesShow={onFilesShow} />}
+                {files.length > 0 && <TaskCardFiles files={files} onFilesShow={onFilesShow} />}
                 <TaskCardSubtasks task={task} />
                 <TaskCardDates task={task}/>
             </div>

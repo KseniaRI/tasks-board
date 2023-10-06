@@ -1,5 +1,5 @@
 import { FormEvent, ChangeEvent } from 'react';
-import { Priority } from "../../types"
+import { Priority } from "../../types";
 
 interface IDefaultValues {
     title: string | undefined,

@@ -1,5 +1,5 @@
 import { MouseEvent } from 'react';
-import { IComment, ITask } from '../types';
+import { IComment } from '../types';
 
 export const handleBackdropClick = (evt: MouseEvent<HTMLDivElement>, onClose: () => void) => {
     if (evt.currentTarget === evt.target) {
@@ -7,10 +7,12 @@ export const handleBackdropClick = (evt: MouseEvent<HTMLDivElement>, onClose: ()
     }
 };
 
-export const countComments = (task: ITask ): number => {
-    return task.comments.reduce((count, comment) => count + countReplies(comment.replies), task.comments.length);
+// count comments of task on first lavel and call function that count replies
+export const countComments = (comments: IComment[] ): number => {
+    return comments.reduce((count, comment) => count + countReplies(comment.replies), comments.length);
 }
-    
-const countReplies = (comments: IComment[]): number => {
-    return comments.reduce((count, comment) => count + 1 + countReplies(comment.replies), 0);
+
+// count replies and replies of replies
+const countReplies = (commentReplies: IComment[]): number => {
+    return commentReplies.reduce((count, commentReply) => count + 1 + countReplies(commentReply.replies), 0);
 }

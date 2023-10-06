@@ -1,7 +1,7 @@
+import { useDispatch } from 'react-redux';
 import { LuFiles } from 'react-icons/lu';
 import { MdAdd } from 'react-icons/md';
 import { ITask } from '../../types';
-import { useDispatch } from 'react-redux';
 import { setModalSubtaskIsOpen, setTaskId } from '../../redux/actions';
 import SubtaskCard from './SubtaskCard';
 
@@ -10,20 +10,26 @@ interface TaskCardTasksProps {
 }
 
 const TaskCardSubtasks = ({ task }: TaskCardTasksProps) => {
+    const { id: taskId, subtasks } = task;
+    
     const dispatch = useDispatch();
 
-    const onAddSubtaskClick = () => {
+    const onAddSubtask = () => {
         dispatch(setModalSubtaskIsOpen(true));
-        dispatch(setTaskId(task.id));
+        dispatch(setTaskId(taskId));
     }
 
     return (
         <div className='task-card-section'>
-            <span className="section-icon"><LuFiles size={17} /></span>
-            {task.subtasks.length === 0 && <p className='section-text'>You can add subtasks</p>}
-            {task.subtasks.length > 0 && (
+            <span className="section-icon">
+                <LuFiles size={17} />
+            </span>
+            {subtasks.length === 0 && (
+                <p className='section-text'>You can add subtasks</p>
+            )}
+            {subtasks.length > 0 && (
                 <ul className='subtasks-list'>
-                    {task.subtasks.map((subtask) => {
+                    {subtasks.map(subtask => {
                         return(
                             <li key={subtask.id}>
                                 <SubtaskCard subtask={subtask} />
@@ -35,7 +41,7 @@ const TaskCardSubtasks = ({ task }: TaskCardTasksProps) => {
             <button
                 type='button'
                 className='section-btn'
-                onClick={onAddSubtaskClick}
+                onClick={onAddSubtask}
             >
                 <MdAdd size={20} />
             </button>
