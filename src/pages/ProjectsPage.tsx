@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useAppSelector } from '../redux/redux-hooks';
 import { getProjects } from '../redux/selectors';
 import { saveToLocalStorage } from '../utils/localStorageOperations';
@@ -5,7 +6,11 @@ import ProjectCard from '../components/ProjectCard';
 
 const ProjectsPage = () => {
     const projects = useAppSelector(getProjects);
-    saveToLocalStorage("projects", JSON.stringify(projects));
+
+    useEffect(() => {
+        saveToLocalStorage("projects", JSON.stringify(projects));
+    }, [projects])
+    
 
     return (
         <div className="project-page">
