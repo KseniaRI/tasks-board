@@ -12,11 +12,10 @@ interface TaskFormProps {
     handleInputChange: (evt: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
     handleUpload?: (evt: ChangeEvent<HTMLInputElement>) => void;
     defaultValues?: IDefaultValues;
-    type: string;
+    type: 'Edit task' | 'Add task' | 'Add subtask';
 }
 
 const TaskForm = ({handleSubmit, handleInputChange, handleUpload, defaultValues, type }: TaskFormProps) => {
-    
     const priorities = Object.values(Priority);
     const priorityOptions = priorities.map(priority => (
         <option key={priority} value={priority}>{priority}</option>
@@ -30,7 +29,8 @@ const TaskForm = ({handleSubmit, handleInputChange, handleUpload, defaultValues,
                 </label>
                 <input
                     className="form-field"
-                    name="title" id="title"
+                    name="title"
+                    id="title"
                     type="text"
                     onChange={handleInputChange}
                     defaultValue={defaultValues?.title}

@@ -16,12 +16,6 @@ export interface IComment {
     replies: IComment[];
 }
 
-export interface IFormData {
-    title: string;
-    description: string;
-    priority: Priority;
-    file: string | undefined;
-}
 export interface ISubtask {
     id: string;
     parentTaskId: string;

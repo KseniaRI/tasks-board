@@ -4,18 +4,22 @@ import { setModalSubtaskIsOpen, setTaskId, updateTask } from '../../redux/action
 import { useAppDispatch, useAppSelector } from '../../redux/redux-hooks';
 import { handleBackdropClick } from '../../utils/commonHelpers';
 import { getProjects, getSelectedProjectId, getTask, getTaskId, getTasksOfSelectedProject } from '../../redux/selectors';
-import { IFormData, ISubtask, Priority } from '../../types';
+import { ISubtask } from '../../types';
 import { updateProjectsInLocalstorage } from '../../utils/localStorageOperations';
 import TaskForm from './TaskForm';
 import CloseBtn from "../CloseBtn";
+
+export interface IFormData {
+    title: string;
+    description: string;
+}
 
 const ModalSubtask = () => {
     const dispatch = useAppDispatch();
     const projectId = useAppSelector(getSelectedProjectId);
     const projects = useAppSelector(getProjects);
     const tasks = useAppSelector(getTasksOfSelectedProject);
-    const taskToEditId = useAppSelector(getTaskId); 
-    const task = useAppSelector(getTask);
+    const taskToEdit = useAppSelector(getTask);
 
     const onClose = useCallback(() => {
         dispatch(setModalSubtaskIsOpen(false));
@@ -34,9 +38,7 @@ const ModalSubtask = () => {
 
     const initialFormData: IFormData = {
             title: '',
-            description: '',
-            priority: Priority.LOW,
-            file: undefined
+            description: '',   
         };
     
     const [formData, setFormData] = useState<IFormData>(initialFormData);
@@ -53,21 +55,21 @@ const ModalSubtask = () => {
         evt.preventDefault();
         const { title, description} = formData;
 
-        if (task) {
+        if (taskToEdit) {
             const newSubtask: ISubtask = {
                 id: uuidv4(),
-                parentTaskId: task.id,
-                num: task?.subtasks.length + 1,
+                parentTaskId: taskToEdit.id,
+                num: taskToEdit?.subtasks.length + 1,
                 title,
                 description,
                 doneStatus: false
             }
             const editedTask = {
-                ...task,
-                subtasks: [...task.subtasks, newSubtask]
+                ...taskToEdit,
+                subtasks: [...taskToEdit.subtasks, newSubtask]
             }
-            dispatch(updateTask(projectId, taskToEditId, editedTask));
-            const updatedTasks = [...tasks, editedTask];
+            dispatch(updateTask(projectId, taskToEdit.id, editedTask));
+            const updatedTasks = tasks.map(task => task.id === taskToEdit.id ? editedTask : task);
 
             updateProjectsInLocalstorage(projects, projectId, updatedTasks);
         }

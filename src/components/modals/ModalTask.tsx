@@ -5,12 +5,19 @@ import { toast } from "react-toastify";
 import moment from "moment";
 import { useAppDispatch, useAppSelector } from "../../redux/redux-hooks";
 import { addTask, setModalTaskIsOpen, setTaskId, updateTask } from "../../redux/actions";
-import { getProjects, getSelectedProjectId, getTask, getTaskId, getTasksOfSelectedProject } from "../../redux/selectors";
+import { getProjects, getSelectedProjectId, getTask, getTasksOfSelectedProject } from "../../redux/selectors";
 import { handleBackdropClick } from "../../utils/commonHelpers";
 import { updateProjectsInLocalstorage } from "../../utils/localStorageOperations";
-import { IFormData, ITask, Priority, TaskStatus } from "../../types";
+import { ITask, Priority, TaskStatus } from "../../types";
 import CloseBtn from "../CloseBtn";
 import TaskForm from "./TaskForm";
+
+export interface IFormData {
+    title: string;
+    description: string;
+    priority: Priority;
+    file: string | undefined;
+}
 
 const modalTaskRoot = document.querySelector('#modal-task')!;
 
@@ -19,7 +26,6 @@ const ModalTask = () => {
     const projectId = useAppSelector(getSelectedProjectId);
     const projects = useAppSelector(getProjects);
     const tasks = useAppSelector(getTasksOfSelectedProject);
-    const taskToEditId = useAppSelector(getTaskId); 
     const taskToEdit = useAppSelector(getTask);
     
     const onClose = useCallback(() => {
@@ -66,7 +72,7 @@ const ModalTask = () => {
         const files = evt.target.files;
 
         if (files && files[0].size > maxSizeInBytes) { 
-            alert("Файл слишком большой. Максимальный размер файла 100KB.");
+            toast.error("The file is too large. Maximum file size 100KB.");
             evt.target.value = ''; 
             return;
         } else if (files) {
@@ -119,8 +125,8 @@ const ModalTask = () => {
                 priority,
                 files
             }
-            dispatch(updateTask(projectId, taskToEditId, editedTask));
-            updatedTasks = tasks.map(task => (task.id === taskToEditId ? editedTask : task)); 
+            dispatch(updateTask(projectId, taskToEdit.id, editedTask));
+            updatedTasks = tasks.map(task => task.id === taskToEdit.id ? editedTask : task); 
         }
 
         updateProjectsInLocalstorage(projects, projectId, updatedTasks);
@@ -133,6 +139,7 @@ const ModalTask = () => {
         description: taskToEdit?.description,
         priority: taskToEdit?.priority
     }
+
     return createPortal(
         <div className="backdrop" onClick={(evt)=>handleBackdropClick(evt, onClose)}>
             <div className="modal-task">
@@ -143,7 +150,7 @@ const ModalTask = () => {
                     handleInputChange={handleInputChange}
                     handleUpload={handleUpload}
                     defaultValues={defaultValues}
-                    type={taskToEdit ? 'Edit Task' : 'Add task'}
+                    type={taskToEdit ? 'Edit task' : 'Add task'}
                 />
             </div>
         </div>,
