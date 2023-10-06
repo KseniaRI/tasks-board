@@ -55,13 +55,18 @@ const ModalSubtask = () => {
         evt.preventDefault();
         const { title, description} = formData;
 
+        const trimmedTitle = title.trim();
+        const trimmedDescription = description.trim();
+        if (trimmedTitle === '' || trimmedDescription === '') {
+            return;
+        }
         if (taskToEdit) {
             const newSubtask: ISubtask = {
                 id: uuidv4(),
                 parentTaskId: taskToEdit.id,
                 num: taskToEdit?.subtasks.length + 1,
-                title,
-                description,
+                title: trimmedTitle,
+                description: trimmedDescription,
                 doneStatus: false
             }
             const editedTask = {

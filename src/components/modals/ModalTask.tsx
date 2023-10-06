@@ -97,6 +97,13 @@ const ModalTask = () => {
     const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
         const { title, description, priority, file } = formData;
+        
+        const trimmedTitle = title.trim();
+        const trimmedDescription = description.trim();
+        if (trimmedTitle === '' || trimmedDescription === '') {
+            return;
+        }
+
         let updatedTasks: ITask[] = [];
         const files = (file && file.length > 0) ? [file] : []; 
 
@@ -104,8 +111,8 @@ const ModalTask = () => {
             const newTask = {
                 id: uuidv4(),
                 num: tasks.length + 1,
-                title,
-                description,
+                title: trimmedTitle,
+                description: trimmedDescription,
                 createdAt: moment().format(),
                 finishedAt: null,
                 priority,

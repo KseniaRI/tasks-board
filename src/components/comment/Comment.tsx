@@ -11,7 +11,6 @@ interface CommentProps{
 }
 
 const Comment = ({ comment, addReply }: CommentProps) => {
-
     const [replyText, setReplyText] = useState('');
     const [showReplyForm, setShowReplyForm] = useState(false);
     const [showReplies, setShowReplies] = useState(false);
