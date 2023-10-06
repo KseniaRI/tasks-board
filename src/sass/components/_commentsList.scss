@@ -1,7 +1,7 @@
 .modal-comments-list {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: $medium-gap;
     width: 100%;
 }
 
@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 20px;
+    padding: 10px;
     border: 1px solid $main-background-color;
-    border-radius: $radi-label;
+    border-radius: $radi-field;
 }

@@ -1,38 +1,91 @@
 [
-        {
-            "id": "id-1",
-            "name": "Amazing Project",
-            "author": "Alex",
-            "tasks": []
-        },
-        {
-            "id": "id-2",
-            "name": "Extraordinary Project",
-            "author": "Anna",
-            "tasks": []
-        },
-        {
-            "id": "id-3",
-            "name": "Cool Project",
-            "author": "Max",
-            "tasks": []
-        },
-        {
-            "id": "id-4",
-            "name": "Nice Project",
-            "author": "Anastasia",
-            "tasks": []
-        },
-        {
-            "id": "id-5",
-            "name": "Fantastic Project",
-            "author": "Katia",
-            "tasks": []
-        },
-        {
-            "id": "id-6",
-            "name": "Wow Project",
-            "author": "Leo",
-            "tasks": []
-        }
-    ]
+    {
+        "id": "id-1",
+        "name": "My Project with tasks example",
+        "author": "Ksenia",
+        "tasks": [
+            {
+                "id": "id-t-1",
+                "num": 1,
+                "title": "My task 1",
+                "dedscription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                "createdAt": "2023-10-05T21:22:31+02:00",
+                "finishedAt": null,
+                "priority": "high",
+                "status": "Dev",
+                "files": ["/images/flower.jpeg", "/images/picture.png"],
+                "comments": [ 
+                    {
+                        "id": "id-c-1", 
+                        "text": "Lorem ipsum dolor", 
+                        "replies": [
+                            {
+                                "id": "id-r-1", 
+                                "text": "Lorem ipsum", 
+                                "replies": []
+                            }
+                        ]
+                    },
+                    {
+                        "id": "id-c-2", 
+                        "text": "Lorem ipsum dolor qwe", 
+                        "replies": []
+                    }
+                ],
+                "subtasks": [
+                    {
+                        "id": "id-st-1",
+                        "parentTaskId": "id-t-1",
+                        "num": 1,
+                        "title": "My subtask 1",
+                        "description": "Lorem ipsum dolor sit amet",
+                        "doneStatus": false
+                    }
+                ]
+            },
+            {
+                "id": "id-t-2",
+                "num": 1,
+                "title": "My task 2",
+                "dedscription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                "createdAt": "2023-10-05T21:21:31+02:00",
+                "finishedAt": null,
+                "priority": "low",
+                "status": "Queue",
+                "files": [],
+                "comments": [],
+                "subtasks": []
+            }
+        ]
+    },
+    {
+        "id": "id-2",
+        "name": "Extraordinary Project",
+        "author": "Anna",
+        "tasks": []
+    },
+    {
+        "id": "id-3",
+        "name": "Cool Project",
+        "author": "Max",
+        "tasks": []
+    },
+    {
+        "id": "id-4",
+        "name": "Nice Project",
+        "author": "Anastasia",
+        "tasks": []
+    },
+    {
+        "id": "id-5",
+        "name": "Fantastic Project",
+        "author": "Katia",
+        "tasks": []
+    },
+    {
+        "id": "id-6",
+        "name": "Wow Project",
+        "author": "Leo",
+        "tasks": []
+    }
+]    

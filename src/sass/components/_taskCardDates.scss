@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     align-self: normal;
-    gap: 10px;
+    gap: $medium-gap;
 }
 
 .task-card-date {
@@ -10,6 +10,6 @@
     width: 90px;
     padding: 4px;
     font-size: $small-text-font-size;
-    border: 1px solid $main-btn-color;
+    border: $secondary-btn-border;
     color: $main-text-color;
 }

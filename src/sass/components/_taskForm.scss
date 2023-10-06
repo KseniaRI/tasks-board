@@ -1,0 +1,33 @@
+.modal-task-form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: $medium-gap;
+    width: 100%;
+
+    & textarea {
+        height: 80px;
+    }
+}
+
+.form-field-wrap {
+    width: 100%;
+}
+
+.form-field {
+    width: 100%;
+    outline: none;
+    margin-top: 5px;
+    border-radius: $radi-field;
+    border: $secondary-btn-border;  
+}
+
+.attach-file-field {
+    margin-top: 5px;
+    color: $main-text-color;
+}
+
+.form-label {
+    font-size: $secondary-text-font-size;
+    color: $main-text-color;
+}

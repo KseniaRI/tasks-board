@@ -1,13 +1,13 @@
-.project-page{
+.project-page {
     padding-top: 40px;
     padding-bottom: 40px;
     text-align: center;
 }
 
-.projects-list{
+.projects-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: $large-gap;
     align-items: center;
     justify-content: center;
     margin-top: 40px;

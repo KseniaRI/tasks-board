@@ -3,8 +3,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 10px;
+    gap: $medium-gap;
     margin: 0 auto;
     padding: 10px;
     background-color: $card-secondary-background-color;
@@ -16,34 +15,35 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 5px;
+    gap: $small-gap;
 
-    & span{
+    & .done-text {
         width: 80px;
         text-align: start;
+        color: $main-text-color;
     }
 }
 
-.subtask-done-btn {
+.subtask-done-check {
     width: 30px;
     height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: white;
+    background-color: #fff;
     border-radius: $radi-btn;
     outline: none;
-    border: 1px solid $main-background-color;
+    border: $secondary-btn-border;
     cursor: pointer;
 }
 
-.subtask-confirm-btn{
+.subtask-confirm-btn {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100px;
     height: 30px;
-    background-color: #5AA16D;
+    background-color: $confirm-btn-color;
     color: $secondary-text-color;
     outline: none;
     border-radius: $radi-btn;
@@ -52,6 +52,6 @@
     transition: $transition-background-color;
 
     &:hover {
-        background-color: #4C845B;
+        background-color: $confirm-btn-hover-color;
     }
 }

@@ -74,7 +74,7 @@ const TaskForm = ({handleSubmit, handleInputChange, handleUpload, defaultValues,
                             Attach file:
                         </label> 
                         <input
-                            className="form-field"
+                            className="attach-file-field"
                             type="file"
                             name="file"
                             id="file"

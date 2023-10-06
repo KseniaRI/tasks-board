@@ -18,7 +18,11 @@ const Comment = ({ comment, addReply }: CommentProps) => {
 
     const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        addReply(replyText, comment.id);  
+        const trimmedReplyText = replyText.trim(); 
+        if (trimmedReplyText === "") {
+            return;
+        }
+        addReply(trimmedReplyText, comment.id);  
         setShowReplyForm(false);
         setReplyText('');
     }

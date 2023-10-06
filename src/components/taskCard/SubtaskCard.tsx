@@ -52,10 +52,10 @@ const SubtaskCard = ({ subtask }: SubtaskCardProps) => {
             </div>
             <p className="task-card-text">{description}</p>
             <div className='subtask-done-status'>
-                <button className='subtask-done-btn' type='submit' onClick={onDoneStatusChange}>
+                <button className='subtask-done-check' type='submit' onClick={onDoneStatusChange}>
                     {isDone ? <MdDoneOutline color='green' size={20} /> : null}
                 </button>
-                <span>{isDone ? 'Done' : 'Not done'}</span>
+                <span className='done-text'>{isDone ? 'Done' : 'Not done'}</span>
                 {showConfirm && <button className='subtask-confirm-btn' onClick={onConfirmStatus}>Confirm?</button>}
             </div>
         </div>

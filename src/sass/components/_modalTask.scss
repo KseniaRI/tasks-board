@@ -1,38 +1,8 @@
 .modal-task {
     @extend %modal;
-    gap: 20px;
-    align-items: center;
     width: 310px;
-     
 }
 
 .modal-task-submit {
     @extend %main-btn;
-}
-
-
-
-.modal-task-form {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-
-    & textarea {
-        height: 80px;
-    }
-}
-
-.form-field-wrap{
-    width: 100%;
-}
-.form-field {
-    width: 100%;
-    outline: none;
-    margin-top: 5px;
-}
-.form-label{
-    font-size: $secondary-text-font-size;
-    color: $main-text-color;
 }

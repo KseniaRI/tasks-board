@@ -2,17 +2,17 @@
     flex-basis: 100%;
 
     @media screen and (min-width: 420px) {
-        flex-basis: calc(100% / 2);
+        flex-basis: calc(100% / 2 - 20px);
     }
     @media  screen and (min-width: 768px) {
-        flex-basis: calc(100% / 3 );
+        flex-basis: calc(100% / 3 - 40px);
     }
     @media screen and (min-width: 1280px) {
-        flex-basis: calc(100% / 4);
+        flex-basis: calc(100% / 4 - 60px);
     }
 }
 
-.project-card{
+.project-card {
     @extend %card;
     height: 208px;
     padding: 30px;

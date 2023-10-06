@@ -21,8 +21,10 @@
     justify-content: center;
     margin-bottom: 30px;
 }
-.project-title{
+
+.project-title {
     grid-area: project-title;
+    color: $main-text-color;
 }
 
 .add-task-btn {
@@ -30,10 +32,11 @@
     justify-content: space-between;
 }
 
-.task-page-link{
+.task-page-link {
     @extend %secondary-btn;
-    border: 1px solid $main-background-color;
+    border: $secondary-btn-border;
     font-size: $main-text-font-size;
+    color: $main-text-color;
     padding: 20px;
     width: auto;
     margin: auto;

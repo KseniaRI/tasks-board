@@ -1,22 +1,33 @@
 .modal-files{
     @extend %modal;
-    gap: 20px;
-    align-items: center;
-    width: 570px;
+    width: 340px;
+    height: 500px;
+
+    @media screen and (min-width: 768px) {
+        width: 560px;
+        height: auto;
+    }
 }
 
 .modal-files-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: $medium-gap;
     width: 100%;
 }
 
 .modal-files-item:first-child{
     width: 100%;
+    
     & img {
         width: 100%;
+        height: 300px;
         object-fit: cover;
+
+        @media screen and (min-width: 768px){
+            height: auto;
+            max-height: 500px;
+        }
     }
 }
 .modal-files-item:not(:first-child){

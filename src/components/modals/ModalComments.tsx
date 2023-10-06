@@ -78,13 +78,17 @@ const ModalComments = () => {
 
     const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
+        const trimmedCommentText = commentText.trim(); 
+        if (trimmedCommentText === "") {
+            return;
+        }
         if (task) {
             const editedTask = {
                 ...task,
                 comments: [
                     {
                         id: uuidv4(),
-                        text: commentText,
+                        text: trimmedCommentText,
                         replies: []
                     },
                     ...task.comments
@@ -107,9 +111,9 @@ const ModalComments = () => {
                     setCommentText={setCommentText}
                     onSubmit={handleSubmit}
                 />
-                <ul className="modal-comments-list">
+                
                     {task?.comments && <CommentsList comments={task.comments} addReply={addReply} />}
-                </ul>
+                
             </div>
         </div>,
         modalCommentsRoot

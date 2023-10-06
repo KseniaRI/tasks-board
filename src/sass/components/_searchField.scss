@@ -1,7 +1,7 @@
 .search-wrap {
     grid-area: search;
     display: flex;
-    gap: 5px;
+    gap: $small-gap;
     margin: 0 auto;
     margin-bottom: 20px;
 }
@@ -12,6 +12,7 @@
     outline: none;
     border: none;
     width: 250px;
+    color: $main-text-color;
 }
 
 .search-label {
@@ -19,8 +20,4 @@
     justify-content: center;
     align-items: center;
     height: 35px;
-    background-color: transparent;
-    outline: none;
-    border-radius: $radi-btn;
-    border: none;
 }

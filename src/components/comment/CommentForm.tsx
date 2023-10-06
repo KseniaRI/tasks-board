@@ -15,7 +15,8 @@ const CommentForm = ({ commentText, setCommentText, onSubmit }: CommentFormProps
                 type="text"
                 placeholder="Write comment"
                 value={commentText}
-                onChange={(evt)=>setCommentText(evt.target.value)}
+                onChange={(evt) => setCommentText(evt.target.value)}
+                required
             />
             <input className='modal-comments-button' type="submit" value='Save'/>
         </form>

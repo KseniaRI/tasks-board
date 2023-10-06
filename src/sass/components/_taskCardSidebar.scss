@@ -1,9 +1,9 @@
 .task-card-sidebar {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    border-left: 1px solid $main-background-color;
+    gap: $medium-gap;
     padding-left: 5px;
+    border-left: $box-border;
 }
 
 .task-card-priority {
@@ -14,28 +14,23 @@
 .task-sidebar-button {
     @extend %secondary-btn;
     width: 50px;
-    gap: 5px;
+    gap: $small-gap;
     font-size: $small-text-font-size;
     justify-content: flex-start;
 }
 
 .task-sidebar-button.edit{
     position: relative;
+
     &::after {
+        @extend %popover;
         content: 'edit task';
-        position: absolute;
         top: 50%;
         left: -65px;
         transform: translateY(-50%);
-        border: 1px solid $main-background-color;
-        background-color: $main-btn-color;
-        color: $secondary-text-color;
-        border-radius: $radi-btn;
         width: 60px;
-        padding: 5px;
-        z-index: 2;
-        opacity: 0
     }
+    
     &:hover::after {
         opacity: 1;
     }
@@ -43,21 +38,16 @@
 
 .task-sidebar-button.files{
     position: relative;
+
     &::after {
+        @extend %popover;
         content: 'attached files';
-        position: absolute;
         top: 50%;
         left: -65px;
         transform: translateY(-50%);
-        border: 1px solid $main-background-color;
-        background-color: $main-btn-color;
-        color: $secondary-text-color;
-        border-radius: $radi-btn;
         width: 60px;
-        padding: 5px;
-        z-index: 2;
-        opacity: 0
     }
+
     &:hover::after {
         opacity: 1;
     }
@@ -67,19 +57,12 @@
     position: relative;
 
     &::after {
+        @extend %popover;
         content: 'add comment';
-        position: absolute;
         top: 50%;
         left: -65px;
         transform: translateY(-50%);
-        border: 1px solid $main-background-color;
-        background-color: $main-btn-color;
-        color: $secondary-text-color;
-        border-radius: $radi-btn;
         width: 60px;
-        padding: 5px;
-        z-index: 3;
-        opacity: 0
     }
 
     &:hover::after {

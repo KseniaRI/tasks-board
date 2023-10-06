@@ -1,7 +1,7 @@
 .task-card-files {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: $small-gap;
 }
 
 .task-card-file {

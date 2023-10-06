@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 10px;
+    gap: $medium-gap;
     margin: 0 auto;
     width: 95%;
     padding: 10px;
@@ -16,20 +16,17 @@
 }
 
 .task-card-content {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    gap: $medium-gap;
     width: 100%;
-    grid-template-rows: auto 1fr auto;
-    gap: 10px;
-    grid-template-areas:
-        "task-title-wrap"
-        "task-card-text"
-        "task-label-wrap";
 }
+
 .task-title-wrap {
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: $medium-gap;
 }
 
 .task-card-num {
@@ -38,23 +35,24 @@
     justify-content: center;
     width: 27px;
     height: 27px;
-    border-radius: 50%;
+    border-radius: $radi-round;
     font-size: $small-text-font-size;
-    border: 1px solid $main-btn-color;
+    border: $secondary-btn-border;
     color: $main-text-color;
     font-weight: 600;
 }
+
 .task-card-text {
     text-align: left;
 }
+
 .task-card-section {
     position: relative;
     width: 100%;
-    min-height: 39px;
-    background-color: $secondary-background-color;
-    border-radius: $radi-label;
-    border: 1px solid $main-background-color;
     padding: 15px 33px 33px 15px;
+    background-color: $secondary-background-color;
+    border-radius: $radi-field;
+    border: 1px solid $main-background-color;
 }
 
 .section-icon {
@@ -62,6 +60,7 @@
     top: 2px;
     left: 2px;
 }
+
 .section-btn {
     @extend %secondary-btn;
     position: absolute;
@@ -70,27 +69,22 @@
     z-index: 1;
 
     &::after {
-            content: 'add subtask';
-            position: absolute;
-            top: 120%;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 1px solid $main-background-color;
-            background-color: $main-btn-color;
-            color: $secondary-text-color;
-            border-radius: $radi-btn;
-            width: 140px;
-            padding: 5px;
-            z-index: 2;
-            opacity: 0
-        }
+        @extend %popover;
+        content: 'add subtask';
+        top: 120%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+    }
+
     &:hover::after{
         opacity: 1;
     } 
 }
+
 .section-text {
     font-size: $small-text-font-size;
-    color: gray;
+    color: $text-disabled-color;
     text-align: start;
     margin-left: 10px;
 }

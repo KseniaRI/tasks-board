@@ -1,12 +1,14 @@
 .modal-comments-form {
     width: 100%;
     display: flex;
-    gap: 10px;
+    gap: $medium-gap;
 }
 
 .modal-comments-input {
     width: 100%;
     outline: none;
+    font-size: $secondary-text-font-size;
+    color: $main-text-color;
 }
 
 .modal-comments-button {

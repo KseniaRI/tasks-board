@@ -22,7 +22,7 @@
     transition: $transition-background-color;
 
     &:disabled {
-        background-color: gray;
+        background-color: $btn-disabled-color;
     }
 
     &:not(:disabled):hover {
@@ -50,9 +50,11 @@
     }
 }
 
-%modal{
+%modal {
     @extend %card;
     position: absolute;
+    align-items: center;
+    gap: $medium-gap;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -60,3 +62,15 @@
     background-color: $card-background-color;
 }
 
+%popover {
+    position: absolute;
+    font-size: $small-text-font-size;
+    background-color: $main-btn-color;
+    color: $secondary-text-color;
+    border: $secondary-btn-border;
+    border-radius: $radi-btn;
+    padding: 5px;
+    z-index: 2;
+    opacity: 0;
+    transition: $transition-opacity;
+}

@@ -6,16 +6,17 @@
     flex-direction: column;
     justify-content: flex-start;
     flex-basis: calc(100% / 3);
-    background-color: $secondary-background-color;
-    padding: 20px;   
+    padding: 10px;
+    background-color: $secondary-background-color;   
 }
 
 .board-column-title {
     padding-bottom: 5px;
     width: 100%;
     align-self: center;
+    font-weight: 600;
     font-size: $secondary-text-font-size;
-    border-bottom: 1px solid $main-background-color;
+    border-bottom: $box-border;
 }
 
 .tasks-list {
@@ -23,8 +24,7 @@
     flex-direction: column;
     width: 100%;
     height: 100%;
-    gap: 10px;
-    padding-top: 10px;
+    gap: $medium-gap;
     margin-top: 10px;
     overflow-y: auto;
 }

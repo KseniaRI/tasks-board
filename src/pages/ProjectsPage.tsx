@@ -10,7 +10,7 @@ const ProjectsPage = () => {
     return (
         <div className="project-page">
             <div className="container">
-                <h2>Choose your project</h2>
+                <h2>Select your project</h2>
                 <ul className="projects-list">
                     {projects.map(project => (
                         <ProjectCard key={project.id} project={project} />
