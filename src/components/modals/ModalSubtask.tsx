@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { setModalSubtaskIsOpen, setTaskId, updateTask } from '../../redux/actions';
 import { useAppDispatch, useAppSelector } from '../../redux/redux-hooks';
 import { handleBackdropClick } from '../../utils/commonHelpers';
-import { getProjects, getSelectedProjectId, getTask, getTaskId, getTasksOfSelectedProject } from '../../redux/selectors';
+import { getProjects, getSelectedProjectId, getTask, getTasksOfSelectedProject } from '../../redux/selectors';
 import { ISubtask } from '../../types';
 import { updateProjectsInLocalstorage } from '../../utils/localStorageOperations';
 import TaskForm from './TaskForm';
