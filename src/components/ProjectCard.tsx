@@ -14,8 +14,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     const dispatch = useAppDispatch();
 
     const onProjectSelect = () => {
-        saveToLocalStorage("selectedProjectId", project.id);
         dispatch(setSelectedProjectId(project.id));
+        saveToLocalStorage("selectedProjectId", project.id);
     }
 
     return (

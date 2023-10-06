@@ -1,4 +1,3 @@
-import { FormEvent } from 'react';
 import { NavLink } from 'react-router-dom';
 import { MdOutlineAddToPhotos} from "react-icons/md";
 import { useAppDispatch, useAppSelector } from "../redux/redux-hooks";
@@ -11,13 +10,12 @@ import {
     getSelectedProject,
     getTasksOfSelectedProject
 } from "../redux/selectors";
-
 import ModalFiles from '../components/modals/ModalFiles';
 import ModalComments from '../components/modals/ModalComments';
 import ModalTask from "../components/modals/ModalTask";
+import ModalSubtask from '../components/modals/ModalSubtask';
 import SearchField from '../components/SearchField';
 import Board from "../components/board/Board";
-import ModalSubtask from '../components/modals/ModalSubtask';
 
 const TasksPage = () => {
     const selectedProject = useAppSelector(getSelectedProject);
@@ -28,10 +26,6 @@ const TasksPage = () => {
     const modalSubtaskIsOpen = useAppSelector(getModalSubtaskIsOpen);
     const dispatch = useAppDispatch();
 
-    const handleInputChange = (evt: FormEvent<HTMLInputElement>) => {
-        const { value } = evt.currentTarget;
-        dispatch(setSearchValue(value));
-    }
     if(selectedProject) {
         return (
             <>
@@ -40,11 +34,10 @@ const TasksPage = () => {
                         <div className="project-title-wrap">
                             <h1 className="project-title">{selectedProject.name}</h1>
                              <button className="add-task-btn" onClick={()=>dispatch(setModalTaskIsOpen(true))}>
-                                <MdOutlineAddToPhotos /> 
-                                Add tasks
+                                <MdOutlineAddToPhotos />Add tasks
                             </button>
                         </div>
-                        {tasks.length > 0 && <SearchField onChange={handleInputChange}/>}
+                        {tasks.length > 0 && <SearchField onChange={(evt)=>dispatch(setSearchValue(evt.currentTarget.value))}/>}
                         <Board/>
                     </div>
                 </div>

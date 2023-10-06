@@ -8,8 +8,8 @@ interface SearchFieldProps {
 const SearchField = ({onChange}: SearchFieldProps) => {
     return (
         <div className="search-wrap">
-            <input className="task-search"
-                name="title"
+            <input
+                className="task-search"
                 type="text"
                 placeholder="Search by title or number of task"
                 onChange={onChange}

@@ -8,12 +8,12 @@ import { ITask, TaskStatus } from "../../types";
 import BoardColumn from "./BoardColumn";
 
 const Board = () => {
-    const taskStatuses = Object.values(TaskStatus);
-
-    const projects = useAppSelector(getProjects);
     const tasks = useAppSelector(getTasksOfSelectedProject);
+    const projects = useAppSelector(getProjects);
     const projectId = useAppSelector(getSelectedProjectId);
     const dispatch = useAppDispatch();
+
+    const taskStatuses = Object.values(TaskStatus);
 
     const onDragEnd = (result: any) => {
         const { draggableId, destination } = result;
@@ -31,7 +31,7 @@ const Board = () => {
                 finishedAt
             }
             dispatch(updateTask(projectId, draggableId, movedTask));
-            const updatedTasks = tasks.map(task => (task.id === movedTask.id ? movedTask : task));
+            const updatedTasks = tasks.map(task => task.id === movedTask.id ? movedTask : task);
             updateProjectsInLocalstorage(projects, projectId, updatedTasks);
         }
     };
