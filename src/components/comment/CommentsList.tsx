@@ -8,8 +8,8 @@ interface CommentsProps {
 const CommentsList = ({ comments, addReply }: CommentsProps) => {
     return (
         <ul className="modal-comments-list">
-            {comments.map((reply, index) => (
-                <li className='modal-comments-item' key={`${reply}-${index}`}>
+            {comments.map(reply => (
+                <li className='modal-comments-item' key={reply.id}>
                     <Comment comment={reply} addReply={addReply}/>
                 </li>
             ))}

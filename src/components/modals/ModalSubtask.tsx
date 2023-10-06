@@ -76,6 +76,7 @@ const ModalSubtask = () => {
         setFormData(initialFormData);
         onClose();
     }
+    
     return (
         <div className="backdrop" onClick={(evt) => handleBackdropClick(evt, onClose)}>
             <div className="modal-task">

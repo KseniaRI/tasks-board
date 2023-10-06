@@ -95,7 +95,7 @@ const ModalComments = () => {
                 ]
             }
             dispatch(updateTask(projectId, taskId, editedTask));
-            const updatedTasks: ITask[] = tasks.map(task => (task.id === taskId ? editedTask : task));
+            const updatedTasks: ITask[] = tasks.map(task => task.id === taskId ? editedTask : task);
             updateProjectsInLocalstorage(projects, projectId, updatedTasks);
             setReplies(editedTask.comments);
         }
@@ -111,9 +111,7 @@ const ModalComments = () => {
                     setCommentText={setCommentText}
                     onSubmit={handleSubmit}
                 />
-                
-                    {task?.comments && <CommentsList comments={task.comments} addReply={addReply} />}
-                
+                {task?.comments && <CommentsList comments={task.comments} addReply={addReply} />}
             </div>
         </div>,
         modalCommentsRoot
