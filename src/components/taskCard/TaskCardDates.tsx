@@ -1,10 +1,10 @@
+import { useEffect, useState } from "react";
 import moment from "moment";
 import { ITask, TaskStatus } from "../../types";
-import { useEffect, useState } from "react";
 
 interface TaskCardDatesProps {
     task: ITask;
-}
+};
 type TTimeUnit = 'minutes' | 'hours' | 'days';
 
 const TaskCardDates = ({ task }: TaskCardDatesProps) => {
@@ -42,9 +42,9 @@ const TaskCardDates = ({ task }: TaskCardDatesProps) => {
                 {createdAtLabel}
             </span>
             {status !== TaskStatus.QUEUE && (
-            <span className="task-card-date">
-                {inWorkLabel}
-            </span>
+                <span className="task-card-date">
+                    {inWorkLabel}
+                </span>
             )}
             {status === TaskStatus.DONE && (
                 <span className="task-card-date">
