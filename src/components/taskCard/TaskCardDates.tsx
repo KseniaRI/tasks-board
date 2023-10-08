@@ -5,12 +5,13 @@ import { useEffect, useState } from "react";
 interface TaskCardDatesProps {
     task: ITask;
 }
+type TTimeUnit = 'minutes' | 'hours' | 'days';
 
 const TaskCardDates = ({ task }: TaskCardDatesProps) => {
     const { createdAt, finishedAt, status } = task;
 
     const [timeDiff, setTimediff] = useState(0);
-    const [timeUnit, setTimeUnit] = useState('minutes');
+    const [timeUnit, setTimeUnit] = useState<TTimeUnit>('minutes');
 
     useEffect(() => {
         const startDate = moment(createdAt);
@@ -31,19 +32,23 @@ const TaskCardDates = ({ task }: TaskCardDatesProps) => {
         }
     }, [createdAt, finishedAt]);
     
+    const createdAtLabel = `Created at: ${moment(createdAt).format('YYYY-MM-DD h:mm')}`;
+    const inWorkLabel = `In work: ${timeDiff} ${timeUnit}`;
+    const finishedAtLabel = `Finished at: ${moment(finishedAt).format('YYYY-MM-DD h:mm')}`;
+
     return (
         <div className="task-dates-wrap">
             <span className="task-card-date">
-                {`Created at: ${moment(createdAt).format('YYYY-MM-DD h:mm')}`}
+                {createdAtLabel}
             </span>
             {status !== TaskStatus.QUEUE && (
             <span className="task-card-date">
-                    {`In work: ${timeDiff} ${timeUnit}`}
+                {inWorkLabel}
             </span>
             )}
             {status === TaskStatus.DONE && (
                 <span className="task-card-date">
-                    {`Finished at: ${moment(finishedAt).format('YYYY-MM-DD h:mm')}`}
+                    {finishedAtLabel}
                 </span>
             )}
         </div>

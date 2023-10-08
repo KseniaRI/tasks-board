@@ -48,7 +48,7 @@ const Comment = ({ comment, addReply }: CommentProps) => {
                     {showRepliesBtnContent}
                 </button>
             )}
-            {showReplies && comment.replies.length > 0 && (
+            {(showReplies && comment.replies.length > 0) && (
                 <CommentsList comments={comment.replies} addReply={addReply}/>
             )}
         </div>
