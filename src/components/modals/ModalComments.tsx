@@ -22,7 +22,7 @@ const ModalComments = () => {
     const tasks = useAppSelector(getTasksOfSelectedProject);
 
     const [commentText, setCommentText] = useState('');
-    const [replies, setReplies] = useState<IComment[]>([]);
+    const [replies, setReplies] = useState<IComment[]>(task?.comments || []);
 
     const onClose = useCallback(() => {
         dispatch(setModalCommentsIsOpen(false));
