@@ -68,7 +68,7 @@ const ModalTask = () => {
     }  
 
     const handleUpload = (evt: ChangeEvent<HTMLInputElement>) => {
-        const maxSizeInBytes = 102400; // 100KB в байтах - чтобы не переполнять localStorage
+        const maxSizeInBytes = 500000; // ограничение в байтах - чтобы не переполнять localStorage
         const files = evt.target.files;
 
         if (files && files[0].size > maxSizeInBytes) { 
