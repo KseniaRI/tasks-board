@@ -18,7 +18,7 @@
     gap: $small-gap;
 
     & .done-text {
-        width: 80px;
+        width: 50px;
         text-align: start;
         color: $main-text-color;
     }
@@ -41,7 +41,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100px;
+    width: 60px;
     height: 30px;
     background-color: $confirm-btn-color;
     color: $secondary-text-color;
