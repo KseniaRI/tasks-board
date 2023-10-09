@@ -68,11 +68,11 @@ const ModalTask = () => {
     }  
 
     const handleUpload = (evt: ChangeEvent<HTMLInputElement>) => {
-        const maxSizeInBytes = 500000; // ограничение в байтах - чтобы не переполнять localStorage
+        const maxSizeInBytes = 500000; // ограничение чтобы не переполнять localStorage
         const files = evt.target.files;
 
         if (files && files[0].size > maxSizeInBytes) { 
-            toast.error("The file is too large. Maximum file size 100KB.");
+            toast.error("The file is too large. Maximum file size 500KB.");
             evt.target.value = ''; 
             return;
         } else if (files) {
