@@ -102,6 +102,8 @@ const ModalComments = () => {
         setCommentText('');
     }
 
+    const taskComments = task?.comments && <CommentsList comments={task.comments} addReply={addReply} />;
+    
     return createPortal(
         <div className="backdrop" onClick={(evt) => handleBackdropClick(evt, onClose)}>
             <div className="modal-comments">
@@ -111,7 +113,7 @@ const ModalComments = () => {
                     setCommentText={setCommentText}
                     onSubmit={handleSubmit}
                 />
-                {task?.comments && <CommentsList comments={task.comments} addReply={addReply} />}
+                {taskComments}
             </div>
         </div>,
         modalCommentsRoot

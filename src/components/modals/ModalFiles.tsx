@@ -43,20 +43,24 @@ const ModalFiles = () => {
             setReorderedFiles(newOrderedFiles);
         }
     }
+    
+    const reorderedFilesExist = reorderedFiles && reorderedFiles.length > 0;
+
+    const filesItems = reorderedFilesExist && reorderedFiles.map((file, index) => (
+        <li key={`reordered-${file}-${index}`}
+            className="modal-files-item"
+            onClick={() => onFileClick(index)}
+        >
+            <img src={file} alt="file" />
+        </li>
+    ));
 
     return createPortal(
         <div className="backdrop" onClick={(evt)=>handleBackdropClick(evt, onClose)}>
             <div className="modal-files">
                 <CloseBtn onClose={onClose}/>  
                 <ul className="modal-files-list">
-                    {(reorderedFiles && reorderedFiles.length > 0) && reorderedFiles.map((file,index) => (
-                        <li key={`reordered-${file}-${index}`}
-                            className="modal-files-item"
-                            onClick={() => onFileClick(index)}
-                        >
-                            <img src={file} alt="file"/>
-                        </li>
-                    ))}
+                    {filesItems}
                 </ul>
             </div>
         </div>,

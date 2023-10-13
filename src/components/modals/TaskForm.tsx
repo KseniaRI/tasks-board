@@ -21,11 +21,14 @@ const TaskForm = ({handleSubmit, handleInputChange, handleUpload, defaultValues,
         <option key={priority} value={priority}>{priority}</option>
     ));
 
+    const titleLabel = type !== 'Add subtask' ? 'Task title:' : 'Subtask title:';
+    const descriptionLabel = type !== 'Add subtask' ? 'Task description:' : 'Subtask description:'
+
     return (
         <form className="modal-task-form" onSubmit={handleSubmit}>
             <div className="form-field-wrap">
                 <label className="form-label" htmlFor="title">
-                    {type !== 'Add subtask' ? 'Task title:' : 'Subtask title:'}
+                    {titleLabel}
                 </label>
                 <input
                     className="form-field"
@@ -40,7 +43,7 @@ const TaskForm = ({handleSubmit, handleInputChange, handleUpload, defaultValues,
             </div>
             <div className="form-field-wrap">
                 <label className="form-label" htmlFor="description">
-                    {type !== 'Add subtask' ? 'Task description:' : 'Subtask description:'}
+                    {descriptionLabel}
                 </label>
                 <textarea
                     className="form-field"

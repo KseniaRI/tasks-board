@@ -147,17 +147,20 @@ const ModalTask = () => {
         priority: taskToEdit?.priority
     }
 
+    const title = taskToEdit ? 'Edit task' : 'Create a new task';
+    const formType = taskToEdit ? 'Edit task' : 'Add task';
+
     return createPortal(
         <div className="backdrop" onClick={(evt)=>handleBackdropClick(evt, onClose)}>
             <div className="modal-task">
                 <CloseBtn onClose={onClose}/>  
-                <h3>{taskToEdit ? 'Edit task' : 'Create a new task'}</h3>
+                <h3>{title}</h3>
                 <TaskForm
                     handleSubmit={handleSubmit}
                     handleInputChange={handleInputChange}
                     handleUpload={handleUpload}
                     defaultValues={defaultValues}
-                    type={taskToEdit ? 'Edit task' : 'Add task'}
+                    type={formType}
                 />
             </div>
         </div>,

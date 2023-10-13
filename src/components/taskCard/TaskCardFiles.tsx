@@ -6,21 +6,26 @@ interface TaskCardFilesProps {
 }
 
 const TaskCardFiles = ({ files, onFilesShow }: TaskCardFilesProps) => {
+
+    const filesExist = files?.length > 0;
+    
+    const taskCardFiles = filesExist && files.map((file, index) => (
+        <li
+            key={`${file}-${index}`}
+            className="task-card-file"
+            onClick={() => onFilesShow(index)}
+        >
+            <img src={file} alt="file" />
+        </li>
+    ));
+
     return (
         <div className="task-card-section">
             <span className="section-icon">
                 <AiOutlinePaperClip size={20} />
             </span>
             <ul className="task-card-files">
-                {files?.length > 0 && files.map((file,index) => (
-                    <li
-                        key={`${file}-${index}`}
-                        className="task-card-file"
-                        onClick={()=>onFilesShow(index)}
-                    >
-                        <img src={file} alt="file"/>
-                    </li>
-                ))}
+                {taskCardFiles}
             </ul>
         </div>
     )

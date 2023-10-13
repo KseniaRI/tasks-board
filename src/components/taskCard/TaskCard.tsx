@@ -38,6 +38,9 @@ const TaskCard = ({ task }: TaskCardProps) => {
         dispatch(setTaskId(task.id));
     }
     
+    const filesExist = files.length > 0;
+    const taskCardFiles = filesExist && <TaskCardFiles files={files} onFilesShow={onFilesShow} />;
+
     return (
         <div className='task-card'>
             <div className="task-card-content">
@@ -46,7 +49,7 @@ const TaskCard = ({ task }: TaskCardProps) => {
                     <h3>{title}</h3>
                 </div>
                 <p className="task-card-text">{description}</p>
-                {files.length > 0 && <TaskCardFiles files={files} onFilesShow={onFilesShow} />}
+                {taskCardFiles}
                 <TaskCardSubtasks task={task} />
                 <TaskCardDates task={task}/>
             </div>

@@ -13,8 +13,6 @@ const Board = () => {
     const projectId = useAppSelector(getSelectedProjectId);
     const dispatch = useAppDispatch();
 
-    const taskStatuses = Object.values(TaskStatus);
-
     const onDragEnd = (result: any) => {
         const { draggableId, destination } = result;
         if (!destination) {
@@ -36,12 +34,15 @@ const Board = () => {
         }
     };
 
+    const taskStatuses = Object.values(TaskStatus);
+    const columns = taskStatuses.map(status => (
+        <BoardColumn key={status} status={status} />
+    ));
+
     return (
         <div className="board">
             <DragDropContext onDragEnd={onDragEnd}>
-                {taskStatuses.map(status => (
-                    <BoardColumn key={status} status={status} />
-                ))}
+                {columns}
             </DragDropContext>
         </div>            
     )

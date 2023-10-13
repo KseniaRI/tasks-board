@@ -11,15 +11,16 @@ const ProjectsPage = () => {
         saveToLocalStorage("projects", JSON.stringify(projects));
     }, [projects])
     
+    const projectsCards = projects.map(project => (
+        <ProjectCard key={project.id} project={project} />
+    ));
 
     return (
         <div className="project-page">
             <div className="container">
                 <h2>Select your project</h2>
                 <ul className="projects-list">
-                    {projects.map(project => (
-                        <ProjectCard key={project.id} project={project} />
-                    ))}
+                    {projectsCards}
                 </ul>
             </div>
         </div>

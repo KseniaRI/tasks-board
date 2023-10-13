@@ -36,21 +36,25 @@ const TaskCardDates = ({ task }: TaskCardDatesProps) => {
     const inWorkLabel = `In work: ${timeDiff} ${timeUnit}`;
     const finishedAtLabel = `Finished at: ${moment(finishedAt).format('YYYY-MM-DD h:mm')}`;
 
+    const inWorkBox = status !== TaskStatus.QUEUE && (
+        <span className="task-card-date">
+            {inWorkLabel}
+        </span>
+    );
+
+    const finishBox = status === TaskStatus.DONE && (
+        <span className="task-card-date">
+            {finishedAtLabel}
+        </span>
+    );
+
     return (
         <div className="task-dates-wrap">
             <span className="task-card-date">
                 {createdAtLabel}
             </span>
-            {status !== TaskStatus.QUEUE && (
-                <span className="task-card-date">
-                    {inWorkLabel}
-                </span>
-            )}
-            {status === TaskStatus.DONE && (
-                <span className="task-card-date">
-                    {finishedAtLabel}
-                </span>
-            )}
+            {inWorkBox}
+            {finishBox}
         </div>
     )
 }

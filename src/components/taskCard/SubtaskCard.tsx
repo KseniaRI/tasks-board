@@ -43,6 +43,10 @@ const SubtaskCard = ({ subtask }: SubtaskCardProps) => {
         }
         setShowConfirm(false);
     }
+
+    const checkbox = isDone ? <MdDoneOutline color='green' size={20} /> : null;
+    const doneText = isDone ? 'Done' : 'Not done';
+    const confirmBtn = showConfirm && <button className='subtask-confirm-btn' onClick={onConfirmStatus}>Confirm?</button>;
     
     return (
         <div className='subtask-card'>
@@ -53,10 +57,10 @@ const SubtaskCard = ({ subtask }: SubtaskCardProps) => {
             <p className="task-card-text">{description}</p>
             <div className='subtask-done-status'>
                 <button className='subtask-done-check' type='submit' onClick={onDoneStatusChange}>
-                    {isDone ? <MdDoneOutline color='green' size={20} /> : null}
+                    {checkbox}
                 </button>
-                <span className='done-text'>{isDone ? 'Done' : 'Not done'}</span>
-                {showConfirm && <button className='subtask-confirm-btn' onClick={onConfirmStatus}>Confirm?</button>}
+                <span className='done-text'>{doneText}</span>
+                {confirmBtn}
             </div>
         </div>
     )

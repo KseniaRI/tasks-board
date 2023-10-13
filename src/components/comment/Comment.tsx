@@ -26,9 +26,22 @@ const Comment = ({ comment, addReply }: CommentProps) => {
         setReplyText('');
     }
 
-    const showRepliesBtnContent = showReplies ?
-        <span className='toogle-label'><MdOutlineKeyboardArrowUp size={20}/>hide replies</span> :
-        <span className='toogle-label'><MdOutlineKeyboardArrowDown size={20}/>show replies</span>;
+    const hasReplies = comment.replies.length > 0;
+
+    const showRepliesIfExist = hasReplies && showReplies;
+
+    const hideIcon = <span className='toogle-label'><MdOutlineKeyboardArrowUp size={20} />hide replies</span>;
+    const showIcon = <span className='toogle-label'><MdOutlineKeyboardArrowDown size={20} />show replies</span>;
+
+    const btnIcon = showReplies ? hideIcon : showIcon;
+    
+    const hideOrShowBtn = <button className="comment-toggle-replies" onClick={()=>setShowReplies(!showReplies)}>{btnIcon}</button>;
+
+    const showRepliesBtn = hasReplies && hideOrShowBtn;
+
+    const replyForm = showReplyForm && <CommentForm commentText={replyText} setCommentText={setReplyText} onSubmit={handleSubmit}/>;
+
+    const commentsList = showRepliesIfExist && <CommentsList comments={comment.replies} addReply={addReply} />;
     
     return (
         <div className='comment'>
@@ -36,21 +49,9 @@ const Comment = ({ comment, addReply }: CommentProps) => {
             <button className="comment-reply-btn" onClick={()=>setShowReplyForm(!showReplyForm)}>
                 <BsSendPlus size={20}/>Replay
             </button>
-            {showReplyForm && (
-                <CommentForm
-                    commentText={replyText}
-                    setCommentText={setReplyText}
-                    onSubmit={handleSubmit}
-                />
-            )}
-            {comment.replies.length > 0 && (
-                <button className="comment-toggle-replies" onClick={()=>setShowReplies(!showReplies)}>
-                    {showRepliesBtnContent}
-                </button>
-            )}
-            {(showReplies && comment.replies.length > 0) && (
-                <CommentsList comments={comment.replies} addReply={addReply}/>
-            )}
+            {replyForm}
+            {showRepliesBtn}
+            {commentsList}
         </div>
     )
 }

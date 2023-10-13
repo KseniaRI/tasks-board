@@ -14,30 +14,34 @@ const TaskCardSubtasks = ({ task }: TaskCardTasksProps) => {
     
     const dispatch = useDispatch();
 
+    const subtasksExist = subtasks.length > 0;
+
     const onAddSubtask = () => {
         dispatch(setModalSubtaskIsOpen(true));
         dispatch(setTaskId(taskId));
     }
 
+    const subtasksList = subtasksExist && (
+        <ul className='subtasks-list'>
+            {subtasks.map(subtask => {
+                return (
+                    <li key={subtask.id}>
+                        <SubtaskCard subtask={subtask} />
+                    </li>
+                )
+            })}
+        </ul>
+    );
+
+    const addSubtaskText = !subtasksExist && <p className='section-text'>You can add subtasks</p>;
+    
     return (
         <div className='task-card-section'>
             <span className="section-icon">
                 <LuFiles size={17} />
             </span>
-            {subtasks.length === 0 && (
-                <p className='section-text'>You can add subtasks</p>
-            )}
-            {subtasks.length > 0 && (
-                <ul className='subtasks-list'>
-                    {subtasks.map(subtask => {
-                        return(
-                            <li key={subtask.id}>
-                                <SubtaskCard subtask={subtask} />
-                            </li>
-                        )
-                    })}
-                </ul>
-            )} 
+            {addSubtaskText}
+            {subtasksList} 
             <button
                 type='button'
                 className='section-btn'

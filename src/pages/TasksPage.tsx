@@ -26,6 +26,9 @@ const TasksPage = () => {
     const modalSubtaskIsOpen = useAppSelector(getModalSubtaskIsOpen);
     const dispatch = useAppDispatch();
 
+    const hasTasks = tasks.length > 0;
+    const searchField = hasTasks && <SearchField onChange={(evt) => dispatch(setSearchValue(evt.currentTarget.value))} />;
+
     if(selectedProject) {
         return (
             <>
@@ -37,7 +40,7 @@ const TasksPage = () => {
                                 <MdOutlineAddToPhotos />Add tasks
                             </button>
                         </div>
-                        {tasks.length > 0 && <SearchField onChange={(evt)=>dispatch(setSearchValue(evt.currentTarget.value))}/>}
+                        {searchField}
                         <Board/>
                     </div>
                 </div>

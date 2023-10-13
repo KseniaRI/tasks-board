@@ -6,13 +6,16 @@ interface CommentsProps {
     addReply: (replyText: string, replyId: string) => void;
 }
 const CommentsList = ({ comments, addReply }: CommentsProps) => {
+
+    const commentsItems = comments.map(reply => (
+        <li className='modal-comments-item' key={reply.id}>
+            <Comment comment={reply} addReply={addReply} />
+        </li>
+    ));
+
     return (
         <ul className="modal-comments-list">
-            {comments.map(reply => (
-                <li className='modal-comments-item' key={reply.id}>
-                    <Comment comment={reply} addReply={addReply}/>
-                </li>
-            ))}
+            {commentsItems}
         </ul>
     )
 }
