@@ -1,28 +1,39 @@
+import React from 'react';
 import { FormEvent, ChangeEvent } from 'react';
-import { Priority } from "../../types";
+import { Priority } from '../../types';
 
 interface IDefaultValues {
-    title: string | undefined,
-    description: string | undefined,
-    priority: string | undefined
+    title: string | undefined;
+    description: string | undefined;
+    priority: string | undefined;
 }
 
 interface TaskFormProps {
     handleSubmit: (evt: FormEvent<HTMLFormElement>) => void;
-    handleInputChange: (evt: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
+    handleInputChange: (
+        evt: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+    ) => void;
     handleUpload?: (evt: ChangeEvent<HTMLInputElement>) => void;
     defaultValues?: IDefaultValues;
     type: 'Edit task' | 'Add task' | 'Add subtask';
 }
 
-const TaskForm = ({handleSubmit, handleInputChange, handleUpload, defaultValues, type }: TaskFormProps) => {
+const TaskForm = ({
+    handleSubmit,
+    handleInputChange,
+    handleUpload,
+    defaultValues,
+    type,
+}: TaskFormProps) => {
     const priorities = Object.values(Priority);
     const priorityOptions = priorities.map(priority => (
-        <option key={priority} value={priority}>{priority}</option>
+        <option key={priority} value={priority}>
+            {priority}
+        </option>
     ));
 
     const titleLabel = type !== 'Add subtask' ? 'Task title:' : 'Subtask title:';
-    const descriptionLabel = type !== 'Add subtask' ? 'Task description:' : 'Subtask description:'
+    const descriptionLabel = type !== 'Add subtask' ? 'Task description:' : 'Subtask description:';
 
     return (
         <form className="modal-task-form" onSubmit={handleSubmit}>
@@ -75,7 +86,7 @@ const TaskForm = ({handleSubmit, handleInputChange, handleUpload, defaultValues,
                     <div className="form-field-wrap">
                         <label className="form-label" htmlFor="file">
                             Attach file:
-                        </label> 
+                        </label>
                         <input
                             className="attach-file-field"
                             type="file"
@@ -88,10 +99,10 @@ const TaskForm = ({handleSubmit, handleInputChange, handleUpload, defaultValues,
                 </>
             )}
             <button className="modal-task-submit" type="submit">
-               {type}
+                {type}
             </button>
         </form>
-    )
-}
+    );
+};
 
 export default TaskForm;

@@ -1,21 +1,22 @@
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { MdOutlineAddToPhotos} from "react-icons/md";
-import { useAppDispatch, useAppSelector } from "../redux/redux-hooks";
-import { setModalTaskIsOpen, setSearchValue } from "../redux/actions";
+import { MdOutlineAddToPhotos } from 'react-icons/md';
+import { useAppDispatch, useAppSelector } from '../redux/redux-hooks';
+import { setModalTaskIsOpen, setSearchValue } from '../redux/actions';
 import {
     getModalCommentsIsOpen,
     getModalFilesIsOpen,
     getModalSubtaskIsOpen,
     getModalTaskIsOpen,
     getSelectedProject,
-    getTasksOfSelectedProject
-} from "../redux/selectors";
+    getTasksOfSelectedProject,
+} from '../redux/selectors';
 import ModalFiles from '../components/modals/ModalFiles';
 import ModalComments from '../components/modals/ModalComments';
-import ModalTask from "../components/modals/ModalTask";
+import ModalTask from '../components/modals/ModalTask';
 import ModalSubtask from '../components/modals/ModalSubtask';
 import SearchField from '../components/SearchField';
-import Board from "../components/board/Board";
+import Board from '../components/board/Board';
 
 const TasksPage = () => {
     const selectedProject = useAppSelector(getSelectedProject);
@@ -27,34 +28,42 @@ const TasksPage = () => {
     const dispatch = useAppDispatch();
 
     const hasTasks = tasks.length > 0;
-    const searchField = hasTasks && <SearchField onChange={(evt) => dispatch(setSearchValue(evt.currentTarget.value))} />;
+    const searchField = hasTasks && (
+        <SearchField onChange={evt => dispatch(setSearchValue(evt.currentTarget.value))} />
+    );
 
-    if(selectedProject) {
+    if (selectedProject) {
         return (
             <>
                 <div className="tasks-page">
                     <div className="container tasks-container">
                         <div className="project-title-wrap">
                             <h1 className="project-title">{selectedProject.name}</h1>
-                             <button className="add-task-btn" onClick={()=>dispatch(setModalTaskIsOpen(true))}>
-                                <MdOutlineAddToPhotos />Add tasks
+                            <button
+                                className="add-task-btn"
+                                onClick={() => dispatch(setModalTaskIsOpen(true))}
+                            >
+                                <MdOutlineAddToPhotos />
+                                Add tasks
                             </button>
                         </div>
                         {searchField}
-                        <Board/>
+                        <Board />
                     </div>
                 </div>
                 {modalTaskIsOpen && <ModalTask />}
                 {modalFilesIsOpen && <ModalFiles />}
                 {modalCommentsIsOpen && <ModalComments />}
-                {modalSubtaskIsOpen && <ModalSubtask/>}
+                {modalSubtaskIsOpen && <ModalSubtask />}
             </>
-        )
+        );
     } else {
         return (
-            <NavLink className="task-page-link" to='/'>First select project</NavLink>
-        )
+            <NavLink className="task-page-link" to="/">
+                First select project
+            </NavLink>
+        );
     }
-}
+};
 
 export default TasksPage;

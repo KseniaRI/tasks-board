@@ -1,18 +1,18 @@
 export enum Priority {
     'CRITICAL' = 'critical',
     'HIGH' = 'high',
-    'LOW' = 'low'
+    'LOW' = 'low',
 }
 
 export enum TaskStatus {
     'QUEUE' = 'Queue',
     'DEV' = 'Dev',
-    'DONE' = 'Done'
+    'DONE' = 'Done',
 }
 
 export interface IComment {
-    id: string,
-    text: string,
+    id: string;
+    text: string;
     replies: IComment[];
 }
 
@@ -38,15 +38,15 @@ export interface ITask {
     subtasks: ISubtask[];
 }
 
-export interface IProject{
-    id: string,
-    name: string,
-    author: string,
-    tasks: ITask[]
-} 
+export interface IProject {
+    id: string;
+    name: string;
+    author: string;
+    tasks: ITask[];
+}
 
 export interface AppState {
-    projects: IProject[]; 
+    projects: IProject[];
     selectedProjectId: string;
     taskId: string;
     fileIdx: number;
@@ -57,71 +57,84 @@ export interface AppState {
     modalSubtaskIsOpen: boolean;
 }
 
-export interface IAddTaskAction{
-    type: 'addTask',
+export interface IAddTaskAction {
+    type: 'addTask';
     payload: {
-        projectId: string,
-        task: ITask
-    }
+        projectId: string;
+        task: ITask;
+    };
 }
 
-export interface IDeleteTaskAction{
-    type: 'deleteTask',
+export interface IDeleteTaskAction {
+    type: 'deleteTask';
     payload: {
-        projectId: string,
-        taskId: string
-    }
+        projectId: string;
+        taskId: string;
+    };
 }
 
-export interface IUpdateTaskAction{
-    type: 'updateTask',
+export interface IUpdateTaskAction {
+    type: 'updateTask';
     payload: {
-        projectId: string,
-        taskId: string,
-        updatedTask: ITask
-    }
+        projectId: string;
+        taskId: string;
+        updatedTask: ITask;
+    };
 }
 
 export interface ISetSelectedProjectId {
-    type: 'setSelectedProjectId',
+    type: 'setSelectedProjectId';
     payload: {
-        projectId: string
-    }
+        projectId: string;
+    };
 }
 
 export interface ISetModalIsOpen {
-    type: 'setModalTaskIsOpen' | 'setModalFilesIsOpen' | 'setModalCommentsIsOpen' | 'setModalSubtaskIsOpen';
+    type:
+        | 'setModalTaskIsOpen'
+        | 'setModalFilesIsOpen'
+        | 'setModalCommentsIsOpen'
+        | 'setModalSubtaskIsOpen';
     payload: {
-        modalIsOpen: boolean
-    }
+        modalIsOpen: boolean;
+    };
 }
 
 export interface ISetTaskId {
-    type: 'setTaskId',
+    type: 'setTaskId';
     payload: {
-        taskId: string
-    }
+        taskId: string;
+    };
 }
 
 export interface ISetFileIdx {
-    type: 'setFileIdx',
+    type: 'setFileIdx';
     payload: {
         fileIdx: number;
-    }
+    };
 }
 
 export interface ISetProjects {
-    type: 'setProjects',
+    type: 'setProjects';
     payload: {
-        projects: IProject[]
-    }
+        projects: IProject[];
+    };
 }
 
 export interface ISetsSearchValue {
-    type: 'setSearchValue',
+    type: 'setSearchValue';
     payload: {
-        searchValue: string 
-    }
+        searchValue: string;
+    };
 }
 
-export type TaskActionType = IAddTaskAction | IDeleteTaskAction | IUpdateTaskAction | ISetSelectedProjectId | ISetModalIsOpen | ISetTaskId | ISetProjects | ISetsSearchValue | ISetFileIdx;
+export type TaskActionType =
+    | IAddTaskAction
+    | IDeleteTaskAction
+    | IUpdateTaskAction
+    | ISetSelectedProjectId
+    | ISetModalIsOpen
+    | ISetTaskId
+    | ISetProjects
+    | ISetsSearchValue
+    | ISetFileIdx;

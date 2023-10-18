@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useAppSelector } from '../redux/redux-hooks';
 import { getProjects } from '../redux/selectors';
 import { saveToLocalStorage } from '../utils/localStorageOperations';
@@ -8,9 +8,9 @@ const ProjectsPage = () => {
     const projects = useAppSelector(getProjects);
 
     useEffect(() => {
-        saveToLocalStorage("projects", JSON.stringify(projects));
-    }, [projects])
-    
+        saveToLocalStorage('projects', JSON.stringify(projects));
+    }, [projects]);
+
     const projectsCards = projects.map(project => (
         <ProjectCard key={project.id} project={project} />
     ));
@@ -19,12 +19,10 @@ const ProjectsPage = () => {
         <div className="project-page">
             <div className="container">
                 <h2>Select your project</h2>
-                <ul className="projects-list">
-                    {projectsCards}
-                </ul>
+                <ul className="projects-list">{projectsCards}</ul>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default ProjectsPage;

@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { MdDoneOutline } from 'react-icons/md';
-import { useAppDispatch, useAppSelector } from "../../redux/redux-hooks";
-import { getProjects, getSelectedProjectId, getTask, getTasksOfSelectedProject } from "../../redux/selectors";
-import { ISubtask } from "../../types";
+import { useAppDispatch, useAppSelector } from '../../redux/redux-hooks';
+import {
+    getProjects,
+    getSelectedProjectId,
+    getTask,
+    getTasksOfSelectedProject,
+} from '../../redux/selectors';
+import { ISubtask } from '../../types';
 import { updateProjectsInLocalstorage } from '../../utils/localStorageOperations';
 import { setTaskId, updateTask } from '../../redux/actions';
 
@@ -16,8 +21,8 @@ const SubtaskCard = ({ subtask }: SubtaskCardProps) => {
     const projectId = useAppSelector(getSelectedProjectId);
     const projects = useAppSelector(getProjects);
     const dispatch = useAppDispatch();
-    const parentTaskNumber =  tasks.find(parentTask => parentTask.id === subtask.parentTaskId)?.num;
-    
+    const parentTaskNumber = tasks.find(parentTask => parentTask.id === subtask.parentTaskId)?.num;
+
     const [isDone, setIsDone] = useState(subtask.doneStatus);
     const [showConfirm, setShowConfirm] = useState(false);
 
@@ -25,45 +30,51 @@ const SubtaskCard = ({ subtask }: SubtaskCardProps) => {
         dispatch(setTaskId(subtask.parentTaskId));
         setIsDone(!isDone);
         setShowConfirm(true);
-    }  
+    };
     const onConfirmStatus = () => {
         const editedSubtask = {
             ...subtask,
-            doneStatus: isDone
-        }
+            doneStatus: isDone,
+        };
         if (task) {
-            const updatedSubasks = task.subtasks.map(task => task.id === subtask.id ? editedSubtask : task);
+            const updatedSubasks = task.subtasks.map(task =>
+                task.id === subtask.id ? editedSubtask : task,
+            );
             const editedTask = {
                 ...task,
-                subtasks: updatedSubasks
-            }
+                subtasks: updatedSubasks,
+            };
             dispatch(updateTask(projectId, task.id, editedTask));
-            const updatedTasks = tasks.map(task => task.id === editedTask.id ? editedTask : task);
+            const updatedTasks = tasks.map(task => (task.id === editedTask.id ? editedTask : task));
             updateProjectsInLocalstorage(projects, projectId, updatedTasks);
         }
         setShowConfirm(false);
-    }
+    };
 
-    const checkbox = isDone ? <MdDoneOutline color='green' size={20} /> : null;
+    const checkbox = isDone ? <MdDoneOutline color="green" size={20} /> : null;
     const doneText = isDone ? 'Done' : 'Not done';
-    const confirmBtn = showConfirm && <button className='subtask-confirm-btn' onClick={onConfirmStatus}>Confirm?</button>;
-    
+    const confirmBtn = showConfirm && (
+        <button className="subtask-confirm-btn" onClick={onConfirmStatus}>
+            Confirm?
+        </button>
+    );
+
     return (
-        <div className='subtask-card'>
+        <div className="subtask-card">
             <div className="task-title-wrap">
                 <span className="task-card-num">{`${parentTaskNumber}.${num}`}</span>
                 <h3 className="task-card-text">{title}</h3>
             </div>
             <p className="task-card-text">{description}</p>
-            <div className='subtask-done-status'>
-                <button className='subtask-done-check' type='submit' onClick={onDoneStatusChange}>
+            <div className="subtask-done-status">
+                <button className="subtask-done-check" type="submit" onClick={onDoneStatusChange}>
                     {checkbox}
                 </button>
-                <span className='done-text'>{doneText}</span>
+                <span className="done-text">{doneText}</span>
                 {confirmBtn}
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default SubtaskCard;

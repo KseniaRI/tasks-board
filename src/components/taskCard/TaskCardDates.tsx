@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import moment from "moment";
-import { ITask, TaskStatus } from "../../types";
+import React, { useEffect, useState } from 'react';
+import moment from 'moment';
+import { ITask, TaskStatus } from '../../types';
 
 interface TaskCardDatesProps {
     task: ITask;
-};
+}
 type TTimeUnit = 'minutes' | 'hours' | 'days';
 
 const TaskCardDates = ({ task }: TaskCardDatesProps) => {
@@ -31,32 +31,26 @@ const TaskCardDates = ({ task }: TaskCardDatesProps) => {
             setTimeUnit('days');
         }
     }, [createdAt, finishedAt]);
-    
+
     const createdAtLabel = `Created at: ${moment(createdAt).format('YYYY-MM-DD h:mm')}`;
     const inWorkLabel = `In work: ${timeDiff} ${timeUnit}`;
     const finishedAtLabel = `Finished at: ${moment(finishedAt).format('YYYY-MM-DD h:mm')}`;
 
     const inWorkBox = status !== TaskStatus.QUEUE && (
-        <span className="task-card-date">
-            {inWorkLabel}
-        </span>
+        <span className="task-card-date">{inWorkLabel}</span>
     );
 
     const finishBox = status === TaskStatus.DONE && (
-        <span className="task-card-date">
-            {finishedAtLabel}
-        </span>
+        <span className="task-card-date">{finishedAtLabel}</span>
     );
 
     return (
         <div className="task-dates-wrap">
-            <span className="task-card-date">
-                {createdAtLabel}
-            </span>
+            <span className="task-card-date">{createdAtLabel}</span>
             {inWorkBox}
             {finishBox}
         </div>
-    )
-}
+    );
+};
 
 export default TaskCardDates;

@@ -1,35 +1,35 @@
-import { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect } from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
-import { ToastContainer } from "react-toastify";
-import { useAppDispatch } from "../redux/redux-hooks";
-import { setProjects, setSelectedProjectId } from "../redux/actions";
+import { ToastContainer } from 'react-toastify';
+import { useAppDispatch } from '../redux/redux-hooks';
+import { setProjects, setSelectedProjectId } from '../redux/actions';
 
 const SharedLayout = () => {
     const dispatch = useAppDispatch();
-    const storedSelectedProjectId = localStorage.getItem("selectedProjectId");
-    const storedProjects = localStorage.getItem("projects");
-    
+    const storedSelectedProjectId = localStorage.getItem('selectedProjectId');
+    const storedProjects = localStorage.getItem('projects');
+
     useEffect(() => {
         if (storedProjects) {
             dispatch(setProjects(JSON.parse(storedProjects)));
         }
-        
+
         if (storedSelectedProjectId) {
             dispatch(setSelectedProjectId(storedSelectedProjectId));
         }
     }, [storedProjects, storedSelectedProjectId, dispatch]);
-    
+
     return (
         <div className="layout-container">
             <header className="header">
                 <div className="container">
-                    <NavLink to='/'>
+                    <NavLink to="/">
                         <p className="logo">Tasks Board</p>
                     </NavLink>
                 </div>
             </header>
             <Suspense fallback={null}>
-                <Outlet/>
+                <Outlet />
             </Suspense>
             <footer className="footer">
                 <div className="container">
@@ -38,7 +38,7 @@ const SharedLayout = () => {
             </footer>
             <ToastContainer />
         </div>
-    )
-}
+    );
+};
 
 export default SharedLayout;

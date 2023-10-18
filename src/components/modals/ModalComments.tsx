@@ -1,24 +1,34 @@
-import { createPortal } from "react-dom";
+import React from 'react';
+import { createPortal } from 'react-dom';
 import { FormEvent, useState, useEffect, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { useAppDispatch, useAppSelector } from "../../redux/redux-hooks";
-import { getProjects, getSelectedProjectId, getTask, getTaskId, getTasksOfSelectedProject } from "../../redux/selectors";
-import { setModalCommentsIsOpen, setTaskId, updateTask } from "../../redux/actions";
-import { updateProjectsInLocalstorage } from "../../utils/localStorageOperations";
-import { handleBackdropClick } from "../../utils/commonHelpers";
-import { IComment, ITask } from "../../types";
-import CloseBtn from "../CloseBtn";
-import CommentsList from "../comment/CommentsList";
-import CommentForm from "../comment/CommentForm";
+import { useAppDispatch, useAppSelector } from '../../redux/redux-hooks';
+import {
+    getProjects,
+    getSelectedProjectId,
+    getTask,
+    getTaskId,
+    getTasksOfSelectedProject,
+} from '../../redux/selectors';
+import { setModalCommentsIsOpen, setTaskId, updateTask } from '../../redux/actions';
+import { updateProjectsInLocalstorage } from '../../utils/localStorageOperations';
+import { handleBackdropClick } from '../../utils/commonHelpers';
+import { IComment, ITask } from '../../types';
+import CloseBtn from '../CloseBtn';
+import CommentsList from '../comment/CommentsList';
+import CommentForm from '../comment/CommentForm';
 
-const modalCommentsRoot = document.querySelector('#modal-comments')!;
+const modalCommentsRoot = document.querySelector('#modal-comments');
+if (!modalCommentsRoot) {
+    throw new Error('Modal task root element not found');
+}
 
 const ModalComments = () => {
     const dispatch = useAppDispatch();
     const projectId = useAppSelector(getSelectedProjectId);
     const projects = useAppSelector(getProjects);
     const taskId = useAppSelector(getTaskId);
-    const task = useAppSelector(getTask); 
+    const task = useAppSelector(getTask);
     const tasks = useAppSelector(getTasksOfSelectedProject);
 
     const [commentText, setCommentText] = useState('');
@@ -32,14 +42,18 @@ const ModalComments = () => {
     useEffect(() => {
         const handleKeyPress = (evt: KeyboardEvent) => {
             if (evt.key === 'Escape') {
-              onClose();
+                onClose();
             }
         };
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
     }, [onClose]);
 
-    const updateReplies = (currentComments: IComment[], parentCommentId: string, newReply: IComment): IComment[] => {
+    const updateReplies = (
+        currentComments: IComment[],
+        parentCommentId: string,
+        newReply: IComment,
+    ): IComment[] => {
         return currentComments.map(comment => {
             if (comment.id === parentCommentId) {
                 return {
@@ -68,18 +82,20 @@ const ModalComments = () => {
         if (task) {
             const editedTask = {
                 ...task,
-                comments: updatedReplies
-            }
+                comments: updatedReplies,
+            };
             dispatch(updateTask(projectId, taskId, editedTask));
-            const updatedTasks: ITask[] = tasks.map(task => (task.id === taskId ? editedTask : task));
+            const updatedTasks: ITask[] = tasks.map(task =>
+                task.id === taskId ? editedTask : task,
+            );
             updateProjectsInLocalstorage(projects, projectId, updatedTasks);
         }
     };
 
     const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        const trimmedCommentText = commentText.trim(); 
-        if (trimmedCommentText === "") {
+        const trimmedCommentText = commentText.trim();
+        if (trimmedCommentText === '') {
             return;
         }
         if (task) {
@@ -89,25 +105,29 @@ const ModalComments = () => {
                     {
                         id: uuidv4(),
                         text: trimmedCommentText,
-                        replies: []
+                        replies: [],
                     },
-                    ...task.comments
-                ]
-            }
+                    ...task.comments,
+                ],
+            };
             dispatch(updateTask(projectId, taskId, editedTask));
-            const updatedTasks: ITask[] = tasks.map(task => task.id === taskId ? editedTask : task);
+            const updatedTasks: ITask[] = tasks.map(task =>
+                task.id === taskId ? editedTask : task,
+            );
             updateProjectsInLocalstorage(projects, projectId, updatedTasks);
             setReplies(editedTask.comments);
         }
         setCommentText('');
-    }
+    };
 
-    const taskComments = task?.comments && <CommentsList comments={task.comments} addReply={addReply} />;
-    
+    const taskComments = task?.comments && (
+        <CommentsList comments={task.comments} addReply={addReply} />
+    );
+
     return createPortal(
-        <div className="backdrop" onClick={(evt) => handleBackdropClick(evt, onClose)}>
+        <div className="backdrop" onClick={evt => handleBackdropClick(evt, onClose)}>
             <div className="modal-comments">
-                <CloseBtn onClose={onClose} /> 
+                <CloseBtn onClose={onClose} />
                 <CommentForm
                     commentText={commentText}
                     setCommentText={setCommentText}
@@ -116,8 +136,8 @@ const ModalComments = () => {
                 {taskComments}
             </div>
         </div>,
-        modalCommentsRoot
-    )
-}
+        modalCommentsRoot,
+    );
+};
 
 export default ModalComments;

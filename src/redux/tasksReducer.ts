@@ -1,9 +1,10 @@
 import { AppState, IProject, TaskActionType } from '../types';
+import projectsData from '../utils/projects.json';
 
-const projectsData: IProject[] = require('../utils/projects.json');
+const projects = projectsData as IProject[];
 
 const initialState: AppState = {
-    projects: projectsData,
+    projects,
     selectedProjectId: '',
     taskId: '',
     fileIdx: 0,
@@ -11,47 +12,49 @@ const initialState: AppState = {
     modalTaskIsOpen: false,
     modalFilesIsOpen: false,
     modalCommentsIsOpen: false,
-    modalSubtaskIsOpen: false
-}
+    modalSubtaskIsOpen: false,
+};
 
 function tasksReducer(state: AppState = initialState, action: TaskActionType): AppState {
     switch (action.type) {
-        case ('addTask'): {
+        case 'addTask': {
             const updatedProjects = state.projects.map(project => {
                 if (project.id !== action.payload.projectId) {
                     return project;
                 } else {
                     return {
                         ...project,
-                        tasks: [...project.tasks, action.payload.task]
-                    }
+                        tasks: [...project.tasks, action.payload.task],
+                    };
                 }
-            })
+            });
             return {
                 ...state,
                 projects: updatedProjects,
-                selectedProjectId: action.payload.projectId
+                selectedProjectId: action.payload.projectId,
             };
         }
-        case ('deleteTask'): {
+        case 'deleteTask': {
             const updatedProjects = state.projects.map(project => {
                 if (project.id !== action.payload.projectId) {
                     return project;
                 } else {
-                    const remainingTasks = project.tasks.filter(task => task.id !== action.payload.taskId)
+                    const remainingTasks = project.tasks.filter(
+                        task => task.id !== action.payload.taskId,
+                    );
                     return {
                         ...project,
-                        tasks: remainingTasks
-                    }
+                        tasks: remainingTasks,
+                    };
                 }
-            })
+            });
             return {
                 ...state,
                 projects: updatedProjects,
-                selectedProjectId: action.payload.projectId
-            }
+                selectedProjectId: action.payload.projectId,
+            };
         }
-        case ('updateTask'): {
+        case 'updateTask': {
             const updatedProjects = state.projects.map(project => {
                 if (project.id !== action.payload.projectId) {
                     return project;
@@ -62,75 +65,75 @@ function tasksReducer(state: AppState = initialState, action: TaskActionType): A
                         } else {
                             return action.payload.updatedTask;
                         }
-                    })
+                    });
                     return {
                         ...project,
-                        tasks: updatedTasks
+                        tasks: updatedTasks,
                     };
                 }
-            })
+            });
             return {
                 ...state,
                 projects: updatedProjects,
-                selectedProjectId: action.payload.projectId
-            }
+                selectedProjectId: action.payload.projectId,
+            };
         }
-        case ('setTaskId'): {
+        case 'setTaskId': {
             return {
                 ...state,
-                taskId: action.payload.taskId
-            }
+                taskId: action.payload.taskId,
+            };
         }
-        case ('setFileIdx'): {
+        case 'setFileIdx': {
             return {
                 ...state,
-                fileIdx: action.payload.fileIdx
-            }
+                fileIdx: action.payload.fileIdx,
+            };
         }
-        case ('setSelectedProjectId'): {
+        case 'setSelectedProjectId': {
             return {
                 ...state,
-                selectedProjectId: action.payload.projectId
-            }
+                selectedProjectId: action.payload.projectId,
+            };
         }
-        case ('setProjects'): {
+        case 'setProjects': {
             return {
                 ...state,
-                projects: action.payload.projects
-            }
+                projects: action.payload.projects,
+            };
         }
-        case ('setSearchValue'): {
+        case 'setSearchValue': {
             return {
                 ...state,
-                searchValue: action.payload.searchValue
-            }
+                searchValue: action.payload.searchValue,
+            };
         }
-        case ('setModalTaskIsOpen'): {
+        case 'setModalTaskIsOpen': {
             return {
                 ...state,
-                modalTaskIsOpen: action.payload.modalIsOpen
-            }
+                modalTaskIsOpen: action.payload.modalIsOpen,
+            };
         }
-        case ('setModalFilesIsOpen'): {
+        case 'setModalFilesIsOpen': {
             return {
                 ...state,
-                modalFilesIsOpen: action.payload.modalIsOpen
-            }
+                modalFilesIsOpen: action.payload.modalIsOpen,
+            };
         }
-        case ('setModalCommentsIsOpen'): {
+        case 'setModalCommentsIsOpen': {
             return {
                 ...state,
-                modalCommentsIsOpen: action.payload.modalIsOpen
-            }
+                modalCommentsIsOpen: action.payload.modalIsOpen,
+            };
         }
-        case ('setModalSubtaskIsOpen'): {
+        case 'setModalSubtaskIsOpen': {
             return {
                 ...state,
-                modalSubtaskIsOpen: action.payload.modalIsOpen
-            }
+                modalSubtaskIsOpen: action.payload.modalIsOpen,
+            };
         }
         default:
-            return state;   
+            return state;
     }
 }
 

@@ -21,24 +21,18 @@ export const getFileIdx = (state: RootState) => state.fileIdx;
 
 export const getSelectedProject = createSelector(
     [getSelectedProjectId, getProjects],
-    (selectedProjectId, projects)=>{
+    (selectedProjectId, projects) => {
         return projects.find(project => project.id === selectedProjectId);
-    }
-)
+    },
+);
 
-export const getTasksOfSelectedProject = createSelector(
-    [getSelectedProject],
-    (selectedProject) =>{
-        return selectedProject ? selectedProject.tasks : [];
-    }
-)
+export const getTasksOfSelectedProject = createSelector([getSelectedProject], selectedProject => {
+    return selectedProject ? selectedProject.tasks : [];
+});
 
-export const getTask = createSelector(
-    [getTasksOfSelectedProject, getTaskId],
-    (tasks, taskId) => {
-        return tasks.find(task => task.id === taskId);
-    }
-)
+export const getTask = createSelector([getTasksOfSelectedProject, getTaskId], (tasks, taskId) => {
+    return tasks.find(task => task.id === taskId);
+});
 export const getFilteredTasks = createSelector(
     [getTasksOfSelectedProject, getSearchValue],
     (tasks, searchValue) => {
@@ -46,18 +40,14 @@ export const getFilteredTasks = createSelector(
             const titleMatch = task.title.toLowerCase().includes(searchValue.toLowerCase());
             const numMatch = task.num.toString() === searchValue;
             return titleMatch || numMatch;
-        })
+        });
         return filteredTasks;
-    }
-)
+    },
+);
 
 export const getFilesOfTask = createSelector(
     [getTasksOfSelectedProject, getTaskId],
     (tasks, taskId) => {
         return tasks.find(task => task.id === taskId)?.files;
-    }
-)
-
-
-
-
+    },
+);

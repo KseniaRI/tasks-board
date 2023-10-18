@@ -1,4 +1,4 @@
-import {  legacy_createStore as createStore } from 'redux';
+import { legacy_createStore as createStore } from 'redux';
 import tasksReducer from './tasksReducer';
 
 const store = createStore(tasksReducer);

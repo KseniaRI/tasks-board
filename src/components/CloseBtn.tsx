@@ -1,4 +1,5 @@
-import { GrClose } from "react-icons/gr";
+import React from 'react';
+import { GrClose } from 'react-icons/gr';
 
 interface CloseBtnProps {
     onClose: () => void;
@@ -9,7 +10,7 @@ const CloseBtn = ({ onClose }: CloseBtnProps) => {
         <button className="modal-close" onClick={onClose}>
             <GrClose />
         </button>
-    )
-}
+    );
+};
 
 export default CloseBtn;

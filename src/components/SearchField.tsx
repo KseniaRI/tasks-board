@@ -1,11 +1,11 @@
-import { FormEvent } from 'react';
-import { MdSearch } from "react-icons/md";
+import React, { FormEvent } from 'react';
+import { MdSearch } from 'react-icons/md';
 
 interface SearchFieldProps {
     onChange: (evt: FormEvent<HTMLInputElement>) => void;
 }
 
-const SearchField = ({onChange}: SearchFieldProps) => {
+const SearchField = ({ onChange }: SearchFieldProps) => {
     return (
         <div className="search-wrap">
             <input
@@ -17,8 +17,8 @@ const SearchField = ({onChange}: SearchFieldProps) => {
             <span className="search-label">
                 <MdSearch />
             </span>
-        </div> 
-    )
-}
+        </div>
+    );
+};
 
 export default SearchField;
